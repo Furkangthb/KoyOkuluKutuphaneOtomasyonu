@@ -99,7 +99,7 @@ public class OgretmenGirisi extends JFrame {
      
         JLabel lblBaslik = new JLabel("Yönetim Paneli");
         lblBaslik.setForeground(Color.WHITE);
-        lblBaslik.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        lblBaslik.setFont(new Font("Z003", Font.PLAIN, 22));
         GridBagConstraints gbcBaslik = new GridBagConstraints();
         gbcBaslik.anchor = GridBagConstraints.WEST;
         gbcBaslik.insets = new Insets(24, 16, 4, 16);
@@ -109,7 +109,7 @@ public class OgretmenGirisi extends JFrame {
 
         JLabel lblKullanici = new JLabel("<html>" + aktifKullanici.getAdSoyad() + "</html>");
         lblKullanici.setForeground(new Color(148, 163, 184)); 
-        lblKullanici.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        lblKullanici.setFont(new Font("Z003", Font.PLAIN, 22));
         GridBagConstraints gbcKullanici = new GridBagConstraints();
         gbcKullanici.anchor = GridBagConstraints.WEST;
         gbcKullanici.insets = new Insets(0, 16, 12, 16);
@@ -130,7 +130,31 @@ public class OgretmenGirisi extends JFrame {
 
         
         btnKitapYonetim = new JButton("  Kitap Yönetimi");
-        menuButonuStilUygula(btnKitapYonetim);
+        btnKitapYonetim.setFont(new Font("Z003", Font.BOLD, 20));
+        btnKitapYonetim.setFocusPainted(false);
+        btnKitapYonetim.setBorderPainted(false);
+        btnKitapYonetim.setContentAreaFilled(false);
+        btnKitapYonetim.setOpaque(true);
+        btnKitapYonetim.setForeground(new Color(226, 232, 240));
+        btnKitapYonetim.setBackground(new Color(30, 41, 59));
+        btnKitapYonetim.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnKitapYonetim.setPreferredSize(new Dimension(170, 42));
+        btnKitapYonetim.setHorizontalAlignment(SwingConstants.LEFT);
+        btnKitapYonetim.setBorder(new EmptyBorder(10, 18, 10, 18));
+        btnKitapYonetim.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (btnKitapYonetim.getFont().isPlain()) { 
+                    btnKitapYonetim.setBackground(new Color(45, 60, 85)); 
+                }
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (btnKitapYonetim.getFont().isPlain()) { 
+                    btnKitapYonetim.setBackground(new Color(30, 41, 59));
+                }
+            }
+        });
         btnKitapYonetim.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 menuSec(btnKitapYonetim);
@@ -147,7 +171,31 @@ public class OgretmenGirisi extends JFrame {
         panelMenu.add(btnKitapYonetim, gbc1);
 
         btnUyeKayit = new JButton("  Üye Kayıt");
-        menuButonuStilUygula(btnUyeKayit);
+        btnUyeKayit.setFont(new Font("Z003", Font.BOLD, 20));
+        btnUyeKayit.setFocusPainted(false);
+        btnUyeKayit.setBorderPainted(false);
+        btnUyeKayit.setContentAreaFilled(false);
+        btnUyeKayit.setOpaque(true);
+        btnUyeKayit.setForeground(new Color(226, 232, 240));
+        btnUyeKayit.setBackground(new Color(30, 41, 59));
+        btnUyeKayit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnUyeKayit.setPreferredSize(new Dimension(170, 42));
+        btnUyeKayit.setHorizontalAlignment(SwingConstants.LEFT);
+        btnUyeKayit.setBorder(new EmptyBorder(10, 18, 10, 18));
+        btnUyeKayit.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (btnUyeKayit.getFont().isPlain()) { 
+                    btnUyeKayit.setBackground(new Color(45, 60, 85)); 
+                }
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (btnUyeKayit.getFont().isPlain()) { 
+                    btnUyeKayit.setBackground(new Color(30, 41, 59));
+                }
+            }
+        });
         btnUyeKayit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 menuSec(btnUyeKayit);
@@ -164,7 +212,31 @@ public class OgretmenGirisi extends JFrame {
         panelMenu.add(btnUyeKayit, gbc2);
 
         btnOduncIade = new JButton("  Ödünç / İade");
-        menuButonuStilUygula(btnOduncIade);
+        btnOduncIade.setFont(new Font("Z003", Font.BOLD, 20));
+        btnOduncIade.setFocusPainted(false);
+        btnOduncIade.setBorderPainted(false);
+        btnOduncIade.setContentAreaFilled(false);
+        btnOduncIade.setOpaque(true);
+        btnOduncIade.setForeground(new Color(226, 232, 240));
+        btnOduncIade.setBackground(new Color(30, 41, 59));
+        btnOduncIade.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnOduncIade.setPreferredSize(new Dimension(170, 42));
+        btnOduncIade.setHorizontalAlignment(SwingConstants.LEFT);
+        btnOduncIade.setBorder(new EmptyBorder(10, 18, 10, 18));
+        btnOduncIade.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (btnOduncIade.getFont().isPlain()) { 
+                    btnOduncIade.setBackground(new Color(45, 60, 85)); 
+                }
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (btnOduncIade.getFont().isPlain()) { 
+                    btnOduncIade.setBackground(new Color(30, 41, 59));
+                }
+            }
+        });
         btnOduncIade.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 menuSec(btnOduncIade);
@@ -181,7 +253,31 @@ public class OgretmenGirisi extends JFrame {
         panelMenu.add(btnOduncIade, gbc3);
 
         btnRaporlar = new JButton("  Raporlar");
-        menuButonuStilUygula(btnRaporlar);
+        btnRaporlar.setFont(new Font("Z003", Font.BOLD, 20));
+        btnRaporlar.setFocusPainted(false);
+        btnRaporlar.setBorderPainted(false);
+        btnRaporlar.setContentAreaFilled(false);
+        btnRaporlar.setOpaque(true);
+        btnRaporlar.setForeground(new Color(226, 232, 240));
+        btnRaporlar.setBackground(new Color(30, 41, 59));
+        btnRaporlar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnRaporlar.setPreferredSize(new Dimension(170, 42));
+        btnRaporlar.setHorizontalAlignment(SwingConstants.LEFT);
+        btnRaporlar.setBorder(new EmptyBorder(10, 18, 10, 18));
+        btnRaporlar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (btnRaporlar.getFont().isPlain()) { 
+                    btnRaporlar.setBackground(new Color(45, 60, 85)); 
+                }
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (btnRaporlar.getFont().isPlain()) { 
+                    btnRaporlar.setBackground(new Color(30, 41, 59));
+                }
+            }
+        });
         btnRaporlar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 menuSec(btnRaporlar);
@@ -206,7 +302,31 @@ public class OgretmenGirisi extends JFrame {
         panelMenu.add(bosAlan, gbcBos);
 
         JButton btnCikis = new JButton("  Çıkış");
-        menuButonuStilUygula(btnCikis);
+        btnCikis.setFont(new Font("Z003", Font.BOLD, 20));
+        btnCikis.setFocusPainted(false);
+        btnCikis.setBorderPainted(false);
+        btnCikis.setContentAreaFilled(false);
+        btnCikis.setOpaque(true);
+        btnCikis.setForeground(new Color(226, 232, 240));
+        btnCikis.setBackground(new Color(30, 41, 59));
+        btnCikis.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnCikis.setPreferredSize(new Dimension(170, 42));
+        btnCikis.setHorizontalAlignment(SwingConstants.LEFT);
+        btnCikis.setBorder(new EmptyBorder(10, 18, 10, 18));
+        btnCikis.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (btnCikis.getFont().isPlain()) { 
+                    btnCikis.setBackground(new Color(45, 60, 85)); 
+                }
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (btnCikis.getFont().isPlain()) { 
+                    btnCikis.setBackground(new Color(30, 41, 59));
+                }
+            }
+        });
         btnCikis.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dispose();
@@ -239,35 +359,6 @@ public class OgretmenGirisi extends JFrame {
         menuSec(btnKitapYonetim);
     }
 
-    private void menuButonuStilUygula(JButton btn) {
-        btn.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        btn.setFocusPainted(false);
-        btn.setBorderPainted(false);
-        btn.setContentAreaFilled(false);
-        btn.setOpaque(true);
-        btn.setForeground(new Color(226, 232, 240));
-        btn.setBackground(new Color(30, 41, 59)); 
-        btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btn.setPreferredSize(new Dimension(170, 42));
-        btn.setHorizontalAlignment(SwingConstants.LEFT);
-        btn.setBorder(new EmptyBorder(10, 18, 10, 18));
-        
-        btn.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                if (btn.getFont().isPlain()) { 
-                    btn.setBackground(new Color(45, 60, 85)); 
-                }
-            }
-            @Override
-            public void mouseExited(MouseEvent e) {
-                if (btn.getFont().isPlain()) { 
-                    btn.setBackground(new Color(30, 41, 59));
-                }
-            }
-        });
-    }
-
     private void menuSec(JButton aktif) {
         butonPasifYap(btnKitapYonetim);
         butonPasifYap(btnUyeKayit);
@@ -280,12 +371,12 @@ public class OgretmenGirisi extends JFrame {
     private void butonAktifYap(JButton btn) {
         btn.setBackground(new Color(37, 99, 235)); 
         btn.setForeground(Color.WHITE);
-        btn.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        btn.setFont(new Font("Z003", Font.BOLD, 18));
     }
 
     private void butonPasifYap(JButton btn) {
         btn.setBackground(new Color(30, 41, 59)); 
         btn.setForeground(new Color(226, 232, 240));
-        btn.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        btn.setFont(new Font("Z003", Font.BOLD, 18));
     }
 }

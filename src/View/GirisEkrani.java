@@ -81,10 +81,10 @@ public class GirisEkrani extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(192, 191, 188));
-		contentPane.add(panel, BorderLayout.CENTER);
-		panel.setLayout(new CardLayout(0, 0));
+		JPanel panelAna = new JPanel();
+		panelAna.setBackground(new Color(192, 191, 188));
+		contentPane.add(panelAna, BorderLayout.CENTER);
+		panelAna.setLayout(new CardLayout(0, 0));
 
 		JPanel panelOgrenci = new JPanel() {
 			@Override
@@ -94,7 +94,7 @@ public class GirisEkrani extends JFrame {
 				g.drawImage(img, 0, 0, getWidth(), getHeight(), this);
 			}
 		};
-		panel.add(panelOgrenci, "OGRENCI");
+		panelAna.add(panelOgrenci, "OGRENCI");
 		panelOgrenci.setLayout(new GridLayout(0, 2, 0, 0));
 
 		JPanel panelSol = new JPanel();
@@ -121,8 +121,8 @@ public class GirisEkrani extends JFrame {
 		btnOgretmenGiris.setBackground(new Color(192, 191, 188));
 		btnOgretmenGiris.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CardLayout cl = (CardLayout) panel.getLayout();
-				cl.show(panel, "OGRETMEN");
+				CardLayout cl = (CardLayout) panelAna.getLayout();
+				cl.show(panelAna, "OGRETMEN");
 			}
 		});
 		GridBagConstraints gbc_btnOgretmenGiris = new GridBagConstraints();
@@ -158,14 +158,14 @@ public class GirisEkrani extends JFrame {
 		gbc_lblOgrenciGirisi.gridy = 0;
 		panelSag.add(lblOgrenciGirisi, gbc_lblOgrenciGirisi);
 
-		JLabel lblNewLabel_2 = new JLabel("Öğrenci No:");
-		lblNewLabel_2.setFont(new Font("Z003", Font.BOLD, 20));
-		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
-		gbc_lblNewLabel_2.anchor = GridBagConstraints.EAST;
-		gbc_lblNewLabel_2.gridx = 0;
-		gbc_lblNewLabel_2.insets = new Insets(5, 20, 5, 5);
-		gbc_lblNewLabel_2.gridy = 1;
-		panelSag.add(lblNewLabel_2, gbc_lblNewLabel_2);
+		JLabel lblOgrenciNo = new JLabel("Öğrenci No:");
+		lblOgrenciNo.setFont(new Font("Z003", Font.BOLD, 20));
+		GridBagConstraints gbc_lblOgrenciNo = new GridBagConstraints();
+		gbc_lblOgrenciNo.anchor = GridBagConstraints.EAST;
+		gbc_lblOgrenciNo.gridx = 0;
+		gbc_lblOgrenciNo.insets = new Insets(5, 20, 5, 5);
+		gbc_lblOgrenciNo.gridy = 1;
+		panelSag.add(lblOgrenciNo, gbc_lblOgrenciNo);
 
 		textOgrenciNo = new JTextField();
 		GridBagConstraints gbc_textOgrenciNo = new GridBagConstraints();
@@ -177,14 +177,14 @@ public class GirisEkrani extends JFrame {
 		panelSag.add(textOgrenciNo, gbc_textOgrenciNo);
 		textOgrenciNo.setColumns(10);
 
-		JLabel lblNewLabel_3 = new JLabel("Şifre:");
-		lblNewLabel_3.setFont(new Font("Z003", Font.BOLD, 20));
-		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
-		gbc_lblNewLabel_3.anchor = GridBagConstraints.EAST;
-		gbc_lblNewLabel_3.insets = new Insets(5, 20, 5, 5);
-		gbc_lblNewLabel_3.gridx = 0;
-		gbc_lblNewLabel_3.gridy = 2;
-		panelSag.add(lblNewLabel_3, gbc_lblNewLabel_3);
+		JLabel lblOgrenciSifre = new JLabel("Şifre:");
+		lblOgrenciSifre.setFont(new Font("Z003", Font.BOLD, 20));
+		GridBagConstraints gbc_lblOgrenciSifre = new GridBagConstraints();
+		gbc_lblOgrenciSifre.anchor = GridBagConstraints.EAST;
+		gbc_lblOgrenciSifre.insets = new Insets(5, 20, 5, 5);
+		gbc_lblOgrenciSifre.gridx = 0;
+		gbc_lblOgrenciSifre.gridy = 2;
+		panelSag.add(lblOgrenciSifre, gbc_lblOgrenciSifre);
 
 		SifreOgrenci = new JPasswordField();
 		GridBagConstraints gbc_sifreOgrenci = new GridBagConstraints();
@@ -239,13 +239,14 @@ public class GirisEkrani extends JFrame {
 				}
 			}
 		};
-		panel.add(panelOgretmen, "OGRETMEN");
+		panelAna.add(panelOgretmen, "OGRETMEN");
 		panelOgretmen.setLayout(new GridBagLayout());
 
 		JPanel panelOgretmenIc = new JPanel();
 		panelOgretmenIc.setBackground(new Color(30,41,59));
 		panelOgretmenIc.setPreferredSize(new Dimension(320, 280));
-		panelOgretmenIc.setOpaque(false);
+		panelOgretmenIc.setOpaque(false);        
+
 		GridBagConstraints gbc_panelOgretmenIc = new GridBagConstraints();
 		gbc_panelOgretmenIc.insets = new Insets(0, 20, 0, 20);
 		gbc_panelOgretmenIc.anchor = GridBagConstraints.NORTH;
@@ -290,15 +291,15 @@ public class GirisEkrani extends JFrame {
 		panelOgretmenIc.add(textFieldKullaniciAdi, gbc_textFieldKullaniciAdi);
 		textFieldKullaniciAdi.setColumns(10);
 
-		JLabel lblNewLabel_6 = new JLabel("Şifre:");
-		lblNewLabel_6.setFont(new Font("Z003", Font.PLAIN, 20));
-		lblNewLabel_6.setForeground(new Color(245, 194, 17));
-		GridBagConstraints gbc_lblNewLabel_6 = new GridBagConstraints();
-		gbc_lblNewLabel_6.anchor = GridBagConstraints.EAST;
-		gbc_lblNewLabel_6.insets = new Insets(5, 10, 5, 10);
-		gbc_lblNewLabel_6.gridx = 0;
-		gbc_lblNewLabel_6.gridy = 2;
-		panelOgretmenIc.add(lblNewLabel_6, gbc_lblNewLabel_6);
+		JLabel lblKullaniciSifre = new JLabel("Şifre:");
+		lblKullaniciSifre.setFont(new Font("Z003", Font.PLAIN, 20));
+		lblKullaniciSifre.setForeground(new Color(245, 194, 17));
+		GridBagConstraints gbc_lblKullaniciSifre = new GridBagConstraints();
+		gbc_lblKullaniciSifre.anchor = GridBagConstraints.EAST;
+		gbc_lblKullaniciSifre.insets = new Insets(5, 10, 5, 10);
+		gbc_lblKullaniciSifre.gridx = 0;
+		gbc_lblKullaniciSifre.gridy = 2;
+		panelOgretmenIc.add(lblKullaniciSifre, gbc_lblKullaniciSifre);
 
 		passwordFieldKullanici = new JPasswordField();
 		GridBagConstraints gbc_passwordFieldKullanici = new GridBagConstraints();
@@ -334,8 +335,8 @@ public class GirisEkrani extends JFrame {
 		
 		btnOgrenciGirisi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CardLayout cl = (CardLayout) panel.getLayout();
-				cl.show(panel, "OGRENCI");
+				CardLayout cl = (CardLayout) panelAna.getLayout();
+				cl.show(panelAna, "OGRENCI");
 			}
 		});
 

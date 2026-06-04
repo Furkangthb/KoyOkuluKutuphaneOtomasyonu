@@ -64,7 +64,7 @@ public class panelOduncİade extends JPanel {
 
         JLabel lblBaslik = new JLabel("Ödünç / İade");
         lblBaslik.setForeground(Color.WHITE);
-        lblBaslik.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        lblBaslik.setFont(new Font("Dialog", Font.BOLD, 18));
         GridBagConstraints gbc_lblBaslik = new GridBagConstraints();
         gbc_lblBaslik.weighty = 1.0; 
         gbc_lblBaslik.weightx = 1.0;
@@ -86,7 +86,7 @@ public class panelOduncİade extends JPanel {
 
         JLabel lblKitapId = new JLabel("Kitap ID:");
         lblKitapId.setForeground(new Color(226, 232, 240));
-        lblKitapId.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        lblKitapId.setFont(new Font("Dialog", Font.PLAIN, 13));
         GridBagConstraints gbc_lblKitapId = new GridBagConstraints();
         gbc_lblKitapId.anchor = GridBagConstraints.EAST;
         gbc_lblKitapId.insets = new Insets(0, 10, 10, 5);
@@ -95,7 +95,7 @@ public class panelOduncİade extends JPanel {
         panelSol.add(lblKitapId, gbc_lblKitapId);
 
         txtKitapId = new JTextField();
-        txtKitapId.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        txtKitapId.setFont(new Font("Dialog", Font.PLAIN, 13));
         txtKitapId.setColumns(10);
         GridBagConstraints gbc_txtKitapId = new GridBagConstraints();
         gbc_txtKitapId.fill = GridBagConstraints.HORIZONTAL;
@@ -106,7 +106,7 @@ public class panelOduncİade extends JPanel {
 
         JLabel lblOgrenciNo = new JLabel("Öğrenci No:");
         lblOgrenciNo.setForeground(new Color(226, 232, 240));
-        lblOgrenciNo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        lblOgrenciNo.setFont(new Font("Dialog", Font.PLAIN, 13));
         GridBagConstraints gbc_lblOgrenciNo = new GridBagConstraints();
         gbc_lblOgrenciNo.anchor = GridBagConstraints.EAST;
         gbc_lblOgrenciNo.insets = new Insets(0, 10, 10, 5);
@@ -115,7 +115,7 @@ public class panelOduncİade extends JPanel {
         panelSol.add(lblOgrenciNo, gbc_lblOgrenciNo);
 
         txtOgrenciNo = new JTextField();
-        txtOgrenciNo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        txtOgrenciNo.setFont(new Font("Dialog", Font.PLAIN, 13));
         txtOgrenciNo.setColumns(10);
         GridBagConstraints gbc_txtOgrenciNo = new GridBagConstraints();
         gbc_txtOgrenciNo.fill = GridBagConstraints.HORIZONTAL;
@@ -127,7 +127,7 @@ public class panelOduncİade extends JPanel {
         JButton btnOduncVer = new JButton("Kitabı Ödünç Ver");
         btnOduncVer.setBackground(new Color(16, 185, 129)); 
         btnOduncVer.setForeground(Color.WHITE);
-        btnOduncVer.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        btnOduncVer.setFont(new Font("Dialog", Font.BOLD, 13));
         btnOduncVer.setFocusPainted(false);
         btnOduncVer.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnOduncVer.addActionListener(new ActionListener() {
@@ -170,7 +170,7 @@ public class panelOduncİade extends JPanel {
         JButton btnIadeAl = new JButton("Seçili Kitabı İade Al");
         btnIadeAl.setBackground(new Color(37, 99, 235)); 
         btnIadeAl.setForeground(Color.WHITE);
-        btnIadeAl.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        btnIadeAl.setFont(new Font("Dialog", Font.BOLD, 13));
         btnIadeAl.setFocusPainted(false);
         btnIadeAl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         btnIadeAl.addActionListener(new ActionListener() {
@@ -213,11 +213,11 @@ public class panelOduncİade extends JPanel {
         panelIcerik.add(panelArama, BorderLayout.NORTH);
 
         JLabel lblArama = new JLabel("Ödünç Ara:");
-        lblArama.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        lblArama.setFont(new Font("Dialog", Font.PLAIN, 13));
         panelArama.add(lblArama);
 
         txtArama = new JTextField(20);
-        txtArama.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        txtArama.setFont(new Font("Dialog", Font.PLAIN, 13));
         txtArama.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -231,13 +231,13 @@ public class panelOduncİade extends JPanel {
         panelIcerik.add(scrollPane, BorderLayout.CENTER);
 
         tableOdunc = new JTable();
-        tableOdunc.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        tableOdunc.setFont(new Font("Dialog", Font.PLAIN, 12));
         tableOdunc.setRowHeight(30);
         tableOdunc.setGridColor(new Color(203, 213, 225));
         tableOdunc.setSelectionBackground(new Color(219, 234, 254));
         tableOdunc.setSelectionForeground(new Color(30, 41, 59));
         tableOdunc.setBackground(Color.WHITE);
-        tableOdunc.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
+        tableOdunc.getTableHeader().setFont(new Font("Dialog", Font.BOLD, 12));
         tableOdunc.getTableHeader().setBackground(new Color(226, 232, 240));
         tableOdunc.getTableHeader().setForeground(new Color(30, 41, 59));
         

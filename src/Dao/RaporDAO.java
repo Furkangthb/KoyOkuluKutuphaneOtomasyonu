@@ -11,7 +11,6 @@ import java.util.List;
 
 public class RaporDAO {
 
-    // En çok okunan kitaplar (tüm zamanlar)
     public List<String[]> enCokOkunanKitaplar() {
         List<String[]> liste = new ArrayList<>();
         String sorgu = "SELECT k.Baslik, COUNT(i.Islem_ID) as Sayi " +
@@ -30,7 +29,6 @@ public class RaporDAO {
         return liste;
     }
 
-    // En çok okuyan üyeler (tüm zamanlar)
     public List<String[]> kitapKurduUyeler() {
         List<String[]> liste = new ArrayList<>();
         String sorgu = "SELECT u.Ad || ' ' || u.Soyad as AdSoyad, COUNT(i.Islem_ID) as Sayi " +
@@ -50,7 +48,6 @@ public class RaporDAO {
         return liste;
     }
 
-    // Ayın kitap kurdu: sadece bu ayın işlemlerine göre SQL ile otomatik bulma
     public String ayinKitapKurdu() {
         String buAy = LocalDate.now().toString().substring(0, 7); // örn: "2026-05"
         String sorgu = "SELECT u.Ad || ' ' || u.Soyad as AdSoyad, COUNT(i.Islem_ID) as Sayi " +
@@ -70,7 +67,6 @@ public class RaporDAO {
         return "Bu ay henüz kayıt yok.";
     }
 
-    // Öğrenci karnesi: seçilen öğrencinin yıl boyunca okuduğu tüm kitaplar
     public List<String[]> ogrenciKarnesi(String ogrenciNo) {
         List<String[]> liste = new ArrayList<>();
         String buYil = String.valueOf(LocalDate.now().getYear());

@@ -30,19 +30,22 @@ public class OduncDAO {
 					PreparedStatement pstmtOgrenci = conn.prepareStatement(ogrenciKontrol)) {
 
 				pstmtDurum.setInt(1, kitapId);
-				ResultSet rsKitap = pstmtDurum.executeQuery();
-				if (!rsKitap.next() || !"Rafta".equals(rsKitap.getString("Durum"))) {
-					conn.rollback();
-					return false;
+				try (ResultSet rsKitap = pstmtDurum.executeQuery()) {
+					if (!rsKitap.next() || !"Rafta".equals(rsKitap.getString("Durum"))) {
+						conn.rollback();
+						return false;
+					}
 				}
 
 				pstmtOgrenci.setString(1, ogrenciNo);
-				ResultSet rsOgrenci = pstmtOgrenci.executeQuery();
-				if (!rsOgrenci.next()) {
-					conn.rollback();
-					return false;
+				int kullaniciId;
+				try (ResultSet rsOgrenci = pstmtOgrenci.executeQuery()) {
+					if (!rsOgrenci.next()) {
+						conn.rollback();
+						return false;
+					}
+					kullaniciId = rsOgrenci.getInt("Kullanici_ID");
 				}
-				int kullaniciId = rsOgrenci.getInt("Kullanici_ID");
 
 				try (PreparedStatement pstmtEkle = conn.prepareStatement(ekleSorgu);
 						PreparedStatement pstmtGuncelle = conn.prepareStatement(guncelleSorgu)) {
@@ -130,44 +133,39 @@ public class OduncDAO {
 		}
 		return liste;
 	}
-	// 4. ÖĞRENCİNİN KENDİ KİTAP GEÇMİŞİNİ GETİR
-    public List<OduncIslem> ogrencininKitaplariniGetir(String ogrenciNo) {
-        List<OduncIslem> liste = new ArrayList<>();
-        // Sadece giriş yapan öğrencinin (WHERE u.OgrenciNo = ?) işlemlerini çekiyoruz
-        String sorgu = "SELECT i.Islem_ID, k.Baslik, i.Alis_Tarihi, i.Iade_Tarihi, i.Teslim_Edildi_Mi " +
-                       "FROM Islemler i " +
-                       "JOIN Kitaplar k ON i.Kitap_ID = k.Kitap_ID " +
-                       "JOIN Kullanicilar u ON i.Kullanici_ID = u.Kullanici_ID " +
-                       "WHERE u.OgrenciNo = ? " +
-                       "ORDER BY i.Islem_ID DESC"; // En son aldıkları en üstte görünsün
 
-        try (Connection conn = DBConnection.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sorgu)) {
-             
-            pstmt.setString(1, ogrenciNo);
-            ResultSet rs = pstmt.executeQuery();
-            
-            while (rs.next()) {
-                OduncIslem o = new OduncIslem();
-                o.setIslemId(rs.getInt("Islem_ID"));
-                o.setKitapBaslik(rs.getString("Baslik"));
-                o.setAlisTarihi(rs.getString("Alis_Tarihi"));
-                o.setIadeTarihi(rs.getString("Iade_Tarihi"));
-                o.setTeslimEdildiMi(rs.getInt("Teslim_Edildi_Mi"));
-                liste.add(o);
-            }
-        } catch (Exception e) {
-            System.out.println("Öğrenci geçmişi getirme hatası: " + e.getMessage());
-        }
-        return liste;
-    }
+	public List<OduncIslem> ogrencininKitaplariniGetir(String ogrenciNo) {
+		List<OduncIslem> liste = new ArrayList<>();
+		String sorgu = "SELECT i.Islem_ID, k.Baslik, i.Alis_Tarihi, i.Iade_Tarihi, i.Teslim_Edildi_Mi "
+				+ "FROM Islemler i " + "JOIN Kitaplar k ON i.Kitap_ID = k.Kitap_ID "
+				+ "JOIN Kullanicilar u ON i.Kullanici_ID = u.Kullanici_ID " + "WHERE u.OgrenciNo = ? "
+				+ "ORDER BY i.Islem_ID DESC";
+
+		try (Connection conn = DBConnection.connect(); PreparedStatement pstmt = conn.prepareStatement(sorgu)) {
+
+			pstmt.setString(1, ogrenciNo);
+			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				OduncIslem o = new OduncIslem();
+				o.setIslemId(rs.getInt("Islem_ID"));
+				o.setKitapBaslik(rs.getString("Baslik"));
+				o.setAlisTarihi(rs.getString("Alis_Tarihi"));
+				o.setIadeTarihi(rs.getString("Iade_Tarihi"));
+				o.setTeslimEdildiMi(rs.getInt("Teslim_Edildi_Mi"));
+				liste.add(o);
+			}
+		} catch (Exception e) {
+			System.out.println("Öğrenci geçmişi getirme hatası: " + e.getMessage());
+		}
+		return liste;
+	}
 
 	public int ogrenciOkunanKitapSayisi(String ogrenciNo) {
 		String sorgu = "SELECT COUNT(*) AS Sayi FROM Islemler i "
 				+ "JOIN Kullanicilar u ON i.Kullanici_ID = u.Kullanici_ID "
 				+ "WHERE u.OgrenciNo = ? AND i.Teslim_Edildi_Mi = 1";
-		try (Connection conn = DBConnection.connect();
-				PreparedStatement pstmt = conn.prepareStatement(sorgu)) {
+		try (Connection conn = DBConnection.connect(); PreparedStatement pstmt = conn.prepareStatement(sorgu)) {
 			pstmt.setString(1, ogrenciNo);
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next())
@@ -182,8 +180,7 @@ public class OduncDAO {
 		String sorgu = "SELECT COUNT(*) AS Sayi FROM Islemler i "
 				+ "JOIN Kullanicilar u ON i.Kullanici_ID = u.Kullanici_ID "
 				+ "WHERE u.OgrenciNo = ? AND i.Teslim_Edildi_Mi = 0";
-		try (Connection conn = DBConnection.connect();
-				PreparedStatement pstmt = conn.prepareStatement(sorgu)) {
+		try (Connection conn = DBConnection.connect(); PreparedStatement pstmt = conn.prepareStatement(sorgu)) {
 			pstmt.setString(1, ogrenciNo);
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next())

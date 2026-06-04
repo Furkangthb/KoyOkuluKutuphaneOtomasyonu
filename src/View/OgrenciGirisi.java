@@ -1,4 +1,3 @@
-
 package View;
 
 import java.awt.EventQueue;
@@ -82,7 +81,6 @@ public class OgrenciGirisi extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout(0, 0));
 
-        // --- SOL MENÜ (SİDEBAR) ---
         JPanel panelMenu = new JPanel();
         panelMenu.setBackground(new Color(30, 41, 59));
         panelMenu.setPreferredSize(new Dimension(240, 0));
@@ -95,10 +93,9 @@ public class OgrenciGirisi extends JFrame {
         gbl_panelMenu.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0 }; 
         panelMenu.setLayout(gbl_panelMenu);
 
-       
         JLabel lblHosgeldin = new JLabel("<html>Merhaba,<br>" + aktifOgrenci.getAdSoyad() + "</html>");
         lblHosgeldin.setForeground(Color.WHITE);
-        lblHosgeldin.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        lblHosgeldin.setFont(new Font("Z003", Font.BOLD, 20));
         GridBagConstraints gbc_lblHosgeldin = new GridBagConstraints();
         gbc_lblHosgeldin.anchor = GridBagConstraints.WEST;
         gbc_lblHosgeldin.insets = new Insets(24, 16, 4, 16);
@@ -108,7 +105,7 @@ public class OgrenciGirisi extends JFrame {
 
         lblProfilOzet = new JLabel("");
         lblProfilOzet.setForeground(new Color(148, 163, 184));
-        lblProfilOzet.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        lblProfilOzet.setFont(new Font("Z003", Font.PLAIN, 18));
         GridBagConstraints gbc_lblProfil = new GridBagConstraints();
         gbc_lblProfil.anchor = GridBagConstraints.WEST;
         gbc_lblProfil.insets = new Insets(0, 16, 16, 16);
@@ -127,8 +124,33 @@ public class OgrenciGirisi extends JFrame {
 
         Insets menuBosluk = new Insets(4, 12, 4, 12);
 
+        // --- KATALOG BUTONU ---
         btnKatalog = new JButton("  Kütüphane Kataloğu");
-        menuButonuStilUygula(btnKatalog);
+        btnKatalog.setFont(new Font("Z003", Font.PLAIN, 12));
+        btnKatalog.setFocusPainted(false);
+        btnKatalog.setBorderPainted(false);
+        btnKatalog.setContentAreaFilled(false);
+        btnKatalog.setOpaque(true);
+        btnKatalog.setForeground(new Color(226, 232, 240));
+        btnKatalog.setBackground(new Color(30, 41, 59));
+        btnKatalog.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnKatalog.setPreferredSize(new Dimension(170, 42));
+        btnKatalog.setHorizontalAlignment(SwingConstants.LEFT);
+        btnKatalog.setBorder(new EmptyBorder(10, 18, 10, 18));
+        btnKatalog.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (btnKatalog.getFont().isPlain()) {
+                    btnKatalog.setBackground(new Color(45, 60, 85)); 
+                }
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (btnKatalog.getFont().isPlain()) {
+                    btnKatalog.setBackground(new Color(30, 41, 59));
+                }
+            }
+        });
         btnKatalog.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 menuSec(btnKatalog);
@@ -145,7 +167,31 @@ public class OgrenciGirisi extends JFrame {
         panelMenu.add(btnKatalog, gbc_btnKatalog);
 
         btnKitaplarim = new JButton("  Üzerimdeki Kitaplar");
-        menuButonuStilUygula(btnKitaplarim);
+        btnKitaplarim.setFont(new Font("Z003", Font.PLAIN, 12)); 
+        btnKitaplarim.setFocusPainted(false);
+        btnKitaplarim.setBorderPainted(false);
+        btnKitaplarim.setContentAreaFilled(false);
+        btnKitaplarim.setOpaque(true);
+        btnKitaplarim.setForeground(new Color(226, 232, 240));
+        btnKitaplarim.setBackground(new Color(30, 41, 59));
+        btnKitaplarim.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnKitaplarim.setPreferredSize(new Dimension(170, 42));
+        btnKitaplarim.setHorizontalAlignment(SwingConstants.LEFT);
+        btnKitaplarim.setBorder(new EmptyBorder(10, 18, 10, 18));
+        btnKitaplarim.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (btnKitaplarim.getFont().isPlain()) {
+                    btnKitaplarim.setBackground(new Color(45, 60, 85)); 
+                }
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (btnKitaplarim.getFont().isPlain()) {
+                    btnKitaplarim.setBackground(new Color(30, 41, 59));
+                }
+            }
+        });
         btnKitaplarim.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 menuSec(btnKitaplarim);
@@ -172,7 +218,31 @@ public class OgrenciGirisi extends JFrame {
         panelMenu.add(bosAlan, gbcBos);
 
         JButton btnCikis = new JButton("  Çıkış Yap");
-        menuButonuStilUygula(btnCikis);
+        btnCikis.setFont(new Font("Z003", Font.PLAIN, 20));
+        btnCikis.setFocusPainted(false);
+        btnCikis.setBorderPainted(false);
+        btnCikis.setContentAreaFilled(false);
+        btnCikis.setOpaque(true);
+        btnCikis.setForeground(new Color(226, 232, 240));
+        btnCikis.setBackground(new Color(30, 41, 59));
+        btnCikis.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnCikis.setPreferredSize(new Dimension(170, 42));
+        btnCikis.setHorizontalAlignment(SwingConstants.LEFT);
+        btnCikis.setBorder(new EmptyBorder(10, 18, 10, 18));
+        btnCikis.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (btnCikis.getFont().isPlain()) {
+                    btnCikis.setBackground(new Color(45, 60, 85)); 
+                }
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (btnCikis.getFont().isPlain()) {
+                    btnCikis.setBackground(new Color(30, 41, 59));
+                }
+            }
+        });
         btnCikis.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dispose();
@@ -204,7 +274,7 @@ public class OgrenciGirisi extends JFrame {
         panelBaslikKatalog.setBackground(new Color(248, 250, 252));
         panelBaslikKatalog.setBorder(new EmptyBorder(16, 20, 8, 20));
         JLabel lblKatalogBaslik = new JLabel("Dijital Katalog");
-        lblKatalogBaslik.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        lblKatalogBaslik.setFont(new Font("C059", Font.BOLD, 22));
         lblKatalogBaslik.setForeground(new Color(30, 41, 59));
         panelBaslikKatalog.add(lblKatalogBaslik, BorderLayout.WEST);
         panelKatalogUst.add(panelBaslikKatalog, BorderLayout.NORTH);
@@ -214,7 +284,7 @@ public class OgrenciGirisi extends JFrame {
         panelArama.setBorder(new EmptyBorder(8, 12, 8, 12));
 
         JLabel lblAra = new JLabel("Kitap Ara:");
-        lblAra.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        lblAra.setFont(new Font("Cantarell", Font.PLAIN, 13));
         panelArama.add(lblAra);
 
         txtArama = new javax.swing.JTextField(28);
@@ -228,14 +298,14 @@ public class OgrenciGirisi extends JFrame {
         panelArama.add(txtArama);
 
         JLabel lblKategori = new JLabel("  Kategori:");
-        lblKategori.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        lblKategori.setFont(new Font("Cantarell", Font.PLAIN, 13));
         panelArama.add(lblKategori);
 
         cmbKategori = new JComboBox<>(new String[] { 
             "Tümü", "Aşk (Romantik)", "Korku", "Gerilim", "Polisiye",
             "Bilimkurgu", "Fantastik", "Tarihi Roman", "Dram", "Mizah", "Distopya / Ütopya" 
         });
-        cmbKategori.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        cmbKategori.setFont(new Font("Cantarell", Font.PLAIN, 13));
         cmbKategori.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 filtrele();
@@ -281,7 +351,7 @@ public class OgrenciGirisi extends JFrame {
             }
         });
 
-        tableKatalog.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        tableKatalog.setFont(new Font("Ubuntu", Font.PLAIN, 12));
         tableKatalog.setRowHeight(30);
         tableKatalog.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
         tableKatalog.getTableHeader().setBackground(new Color(226, 232, 240));
@@ -296,7 +366,7 @@ public class OgrenciGirisi extends JFrame {
         panelBaslikKitaplarim.setBackground(new Color(248, 250, 252));
         panelBaslikKitaplarim.setBorder(new EmptyBorder(16, 20, 16, 20));
         JLabel lblKitaplarimBaslik = new JLabel("Ödünç Aldığım Kitaplar & Geçmişim");
-        lblKitaplarimBaslik.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        lblKitaplarimBaslik.setFont(new Font("C059", Font.BOLD, 22));
         lblKitaplarimBaslik.setForeground(new Color(30, 41, 59));
         panelBaslikKitaplarim.add(lblKitaplarimBaslik, BorderLayout.WEST);
         panelKitaplarim.add(panelBaslikKitaplarim, BorderLayout.NORTH);
@@ -341,7 +411,7 @@ public class OgrenciGirisi extends JFrame {
             }
         });
 
-        tableKitaplarim.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        tableKitaplarim.setFont(new Font("Ubuntu", Font.PLAIN, 12));
         tableKitaplarim.setRowHeight(30);
         tableKitaplarim.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
         tableKitaplarim.getTableHeader().setBackground(new Color(226, 232, 240));
@@ -351,36 +421,6 @@ public class OgrenciGirisi extends JFrame {
         katalogYenile();
         kitaplarimiYenile();
         profilYenile();
-    }
-
-    
-    private void menuButonuStilUygula(JButton btn) {
-        btn.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        btn.setFocusPainted(false);
-        btn.setBorderPainted(false);
-        btn.setContentAreaFilled(false);
-        btn.setOpaque(true);
-        btn.setForeground(new Color(226, 232, 240));
-        btn.setBackground(new Color(30, 41, 59));
-        btn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btn.setPreferredSize(new Dimension(170, 42));
-        btn.setHorizontalAlignment(SwingConstants.LEFT);
-        btn.setBorder(new EmptyBorder(10, 18, 10, 18));
-        
-        btn.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                if (btn.getFont().isPlain()) {
-                    btn.setBackground(new Color(45, 60, 85)); 
-                }
-            }
-            @Override
-            public void mouseExited(MouseEvent e) {
-                if (btn.getFont().isPlain()) {
-                    btn.setBackground(new Color(30, 41, 59));
-                }
-            }
-        });
     }
 
     private void menuSec(JButton aktif) {
@@ -393,13 +433,13 @@ public class OgrenciGirisi extends JFrame {
     private void butonAktifYap(JButton btn) {
         btn.setBackground(new Color(37, 99, 235)); 
         btn.setForeground(Color.WHITE);
-        btn.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        btn.setFont(new Font("Z003", Font.PLAIN, 18));
     }
 
     private void butonPasifYap(JButton btn) {
         btn.setBackground(new Color(30, 41, 59)); 
         btn.setForeground(new Color(226, 232, 240));
-        btn.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        btn.setFont(new Font("Z003", Font.PLAIN, 18));
     }
 
     private void profilYenile() {

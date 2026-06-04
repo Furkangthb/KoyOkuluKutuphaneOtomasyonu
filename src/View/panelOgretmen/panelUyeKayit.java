@@ -36,7 +36,6 @@ public class panelUyeKayit extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    // Anlamlı değişken isimleri
     private JTextField txtUyeNo;
     private JTextField txtAdSoyad;
     private JTextField txtSifre;
@@ -47,11 +46,10 @@ public class panelUyeKayit extends JPanel {
 
     public panelUyeKayit() {
         setLayout(new BorderLayout(0, 0));
-        setBackground(new Color(248, 250, 252)); // ICERIK Rengi
+        setBackground(new Color(248, 250, 252)); 
 
-        // --- SOL PANEL (FORM ALANLARI) ---
         JPanel panelSol = new JPanel();
-        panelSol.setBackground(new Color(51, 65, 85)); // FORM_PANEL Rengi
+        panelSol.setBackground(new Color(51, 65, 85)); 
         panelSol.setPreferredSize(new Dimension(300, 600));
         add(panelSol, BorderLayout.WEST);
         
@@ -62,7 +60,6 @@ public class panelUyeKayit extends JPanel {
         gbl_panelSol.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
         panelSol.setLayout(gbl_panelSol);
 
-        // Üst Ayırıcı
         JSeparator ustAyirici = new JSeparator();
         ustAyirici.setForeground(new Color(92, 126, 164));
         GridBagConstraints gbc_ustAyirici = new GridBagConstraints();
@@ -74,10 +71,9 @@ public class panelUyeKayit extends JPanel {
         gbc_ustAyirici.gridy = 0;
         panelSol.add(ustAyirici, gbc_ustAyirici);
 
-        // Başlık
         JLabel lblUyeBaslik = new JLabel("Üye Kayıt");
         lblUyeBaslik.setForeground(Color.WHITE);
-        lblUyeBaslik.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        lblUyeBaslik.setFont(new Font("Dialog", Font.BOLD, 18));
         GridBagConstraints gbc_lblUyeBaslik = new GridBagConstraints();
         gbc_lblUyeBaslik.insets = new Insets(20, 0, 20, 0);
         gbc_lblUyeBaslik.weighty = 1.0;
@@ -87,7 +83,6 @@ public class panelUyeKayit extends JPanel {
         gbc_lblUyeBaslik.gridy = 1;
         panelSol.add(lblUyeBaslik, gbc_lblUyeBaslik);
 
-        // Orta Ayırıcı
         JSeparator ortaAyirici = new JSeparator();
         ortaAyirici.setForeground(new Color(92, 126, 164));
         GridBagConstraints gbc_ortaAyirici = new GridBagConstraints();
@@ -99,10 +94,9 @@ public class panelUyeKayit extends JPanel {
         gbc_ortaAyirici.gridy = 2;
         panelSol.add(ortaAyirici, gbc_ortaAyirici);
 
-        // Kullanıcı No
         JLabel lblNo = new JLabel("Kullanıcı No:");
         lblNo.setForeground(new Color(226, 232, 240));
-        lblNo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        lblNo.setFont(new Font("Dialog", Font.PLAIN, 13));
         GridBagConstraints gbc_lblNo = new GridBagConstraints();
         gbc_lblNo.anchor = GridBagConstraints.EAST;
         gbc_lblNo.insets = new Insets(0, 10, 10, 5);
@@ -111,7 +105,7 @@ public class panelUyeKayit extends JPanel {
         panelSol.add(lblNo, gbc_lblNo);
 
         txtUyeNo = new JTextField();
-        txtUyeNo.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        txtUyeNo.setFont(new Font("Dialog", Font.PLAIN, 13));
         GridBagConstraints gbc_txtUyeNo = new GridBagConstraints();
         gbc_txtUyeNo.insets = new Insets(0, 0, 10, 20);
         gbc_txtUyeNo.fill = GridBagConstraints.HORIZONTAL;
@@ -120,10 +114,9 @@ public class panelUyeKayit extends JPanel {
         panelSol.add(txtUyeNo, gbc_txtUyeNo);
         txtUyeNo.setColumns(10);
 
-        // Ad Soyad
         JLabel lblAd = new JLabel("Ad Soyad:");
         lblAd.setForeground(new Color(226, 232, 240));
-        lblAd.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        lblAd.setFont(new Font("Dialog", Font.PLAIN, 13));
         GridBagConstraints gbc_lblAd = new GridBagConstraints();
         gbc_lblAd.anchor = GridBagConstraints.EAST;
         gbc_lblAd.insets = new Insets(0, 10, 10, 5);
@@ -132,7 +125,7 @@ public class panelUyeKayit extends JPanel {
         panelSol.add(lblAd, gbc_lblAd);
 
         txtAdSoyad = new JTextField();
-        txtAdSoyad.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        txtAdSoyad.setFont(new Font("Dialog", Font.PLAIN, 13));
         GridBagConstraints gbc_txtAdSoyad = new GridBagConstraints();
         gbc_txtAdSoyad.insets = new Insets(0, 0, 10, 20);
         gbc_txtAdSoyad.fill = GridBagConstraints.HORIZONTAL;
@@ -141,10 +134,9 @@ public class panelUyeKayit extends JPanel {
         panelSol.add(txtAdSoyad, gbc_txtAdSoyad);
         txtAdSoyad.setColumns(10);
 
-        // Şifre
         JLabel lblSifre = new JLabel("Şifre:");
         lblSifre.setForeground(new Color(226, 232, 240));
-        lblSifre.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        lblSifre.setFont(new Font("Dialog", Font.PLAIN, 13));
         GridBagConstraints gbc_lblSifre = new GridBagConstraints();
         gbc_lblSifre.anchor = GridBagConstraints.EAST;
         gbc_lblSifre.insets = new Insets(0, 10, 10, 5);
@@ -153,7 +145,7 @@ public class panelUyeKayit extends JPanel {
         panelSol.add(lblSifre, gbc_lblSifre);
 
         txtSifre = new JTextField();
-        txtSifre.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        txtSifre.setFont(new Font("Dialog", Font.PLAIN, 13));
         GridBagConstraints gbc_txtSifre = new GridBagConstraints();
         gbc_txtSifre.insets = new Insets(0, 0, 10, 20);
         gbc_txtSifre.fill = GridBagConstraints.HORIZONTAL;
@@ -162,10 +154,9 @@ public class panelUyeKayit extends JPanel {
         panelSol.add(txtSifre, gbc_txtSifre);
         txtSifre.setColumns(10);
 
-        // Rol Seçimi
         JLabel lblRol = new JLabel("Rol:");
         lblRol.setForeground(new Color(226, 232, 240));
-        lblRol.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        lblRol.setFont(new Font("Dialog", Font.PLAIN, 13));
         GridBagConstraints gbc_lblRol = new GridBagConstraints();
         gbc_lblRol.anchor = GridBagConstraints.EAST;
         gbc_lblRol.insets = new Insets(0, 10, 20, 5);
@@ -174,7 +165,7 @@ public class panelUyeKayit extends JPanel {
         panelSol.add(lblRol, gbc_lblRol);
 
         cmbRol = new JComboBox<>(new String[] { "Seçiniz...", "OGRENCI", "OGRETMEN" });
-        cmbRol.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        cmbRol.setFont(new Font("Dialog", Font.PLAIN, 13));
         GridBagConstraints gbc_cmbRol = new GridBagConstraints();
         gbc_cmbRol.insets = new Insets(0, 0, 20, 20);
         gbc_cmbRol.fill = GridBagConstraints.HORIZONTAL;
@@ -182,13 +173,26 @@ public class panelUyeKayit extends JPanel {
         gbc_cmbRol.gridy = 6;
         panelSol.add(cmbRol, gbc_cmbRol);
 
-        // Yeni Üye Ekle Butonu
         JButton btnUyeEkle = new JButton("Yeni Üye Ekle");
-        btnUyeEkle.setBackground(new Color(16, 185, 129)); // BASARI (Yeşil)
+        btnUyeEkle.setBackground(new Color(16, 185, 129));
         btnUyeEkle.setForeground(Color.WHITE);
-        btnUyeEkle.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        btnUyeEkle.setFont(new Font("Dialog", Font.BOLD, 13));
         btnUyeEkle.setFocusPainted(false);
         btnUyeEkle.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnUyeEkle.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (btnUyeEkle.isEnabled()) {
+                    btnUyeEkle.setBackground(new Color(5, 150, 105));
+                }
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (btnUyeEkle.isEnabled()) {
+                    btnUyeEkle.setBackground(new Color(16, 185, 129));
+                }
+            }
+        });
         btnUyeEkle.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String no = txtUyeNo.getText().trim();
@@ -219,13 +223,26 @@ public class panelUyeKayit extends JPanel {
         gbc_btnUyeEkle.gridy = 7;
         panelSol.add(btnUyeEkle, gbc_btnUyeEkle);
 
-        // Üyeyi Güncelle Butonu
         JButton btnUyeGuncelle = new JButton("Üyeyi Güncelle");
-        btnUyeGuncelle.setBackground(new Color(245, 158, 11)); // UYARI (Turuncu)
+        btnUyeGuncelle.setBackground(new Color(245, 158, 11)); 
         btnUyeGuncelle.setForeground(Color.WHITE);
-        btnUyeGuncelle.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        btnUyeGuncelle.setFont(new Font("Dialog", Font.BOLD, 13));
         btnUyeGuncelle.setFocusPainted(false);
         btnUyeGuncelle.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnUyeGuncelle.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (btnUyeGuncelle.isEnabled()) {
+                    btnUyeGuncelle.setBackground(new Color(217, 119, 6)); 
+                }
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                if (btnUyeGuncelle.isEnabled()) {
+                    btnUyeGuncelle.setBackground(new Color(245, 158, 11));
+                }
+            }
+        });
         btnUyeGuncelle.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int secili = tabloUyeler.getSelectedRow();
@@ -262,64 +279,23 @@ public class panelUyeKayit extends JPanel {
         gbc_btnUyeGuncelle.gridy = 8;
         panelSol.add(btnUyeGuncelle, gbc_btnUyeGuncelle);
 
-        // Üyeyi Sil Butonu
-        JButton btnUyeSil = new JButton("Üyeyi Sil");
-        btnUyeSil.setBackground(new Color(239, 68, 68)); // TEHLIKE (Kırmızı)
-        btnUyeSil.setForeground(Color.WHITE);
-        btnUyeSil.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        btnUyeSil.setFocusPainted(false);
-        btnUyeSil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btnUyeSil.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int secili = tabloUyeler.getSelectedRow();
-                if (secili == -1) {
-                    JOptionPane.showMessageDialog(null, "Tablodan bir üye seçin!");
-                    return;
-                }
-                
-                int cevap = JOptionPane.showConfirmDialog(null, "Bu üyeyi silmek istediğinize emin misiniz?", "Silme Onayı", JOptionPane.YES_NO_OPTION);
-                if (cevap == JOptionPane.YES_OPTION) {
-                    int id = Integer.parseInt(tabloUyeler.getModel().getValueAt(seciliModelSatir(secili), 0).toString());
-                    KullaniciDAO dao = new KullaniciDAO();
-                    
-                    if (dao.kullaniciSil(id)) {
-                        JOptionPane.showMessageDialog(null, "Üye başarıyla silindi!", "Başarılı", JOptionPane.INFORMATION_MESSAGE);
-                        uyeleriYenile();
-                        formuTemizle();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Üye silinemedi! İade edilmemiş kitabı olabilir.", "Hata", JOptionPane.ERROR_MESSAGE);
-                    }
-                }
-            }
-        });
-        GridBagConstraints gbc_btnUyeSil = new GridBagConstraints();
-        gbc_btnUyeSil.anchor = GridBagConstraints.NORTH;
-        gbc_btnUyeSil.fill = GridBagConstraints.HORIZONTAL;
-        gbc_btnUyeSil.gridwidth = 2;
-        gbc_btnUyeSil.insets = new Insets(0, 20, 20, 20);
-        gbc_btnUyeSil.gridx = 0;
-        gbc_btnUyeSil.gridy = 9;
-        panelSol.add(btnUyeSil, gbc_btnUyeSil);
 
-
-        // --- SAĞ PANEL (ARAMA VE TABLO) ---
         JPanel panelIcerik = new JPanel();
         panelIcerik.setBackground(new Color(248, 250, 252));
         add(panelIcerik, BorderLayout.CENTER);
         panelIcerik.setLayout(new BorderLayout(0, 0));
 
-        // Arama Paneli
         JPanel panelArama = new JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 12, 10));
         panelArama.setBackground(new Color(241, 245, 249)); // ARAMA Paneli Rengi
         panelArama.setBorder(new EmptyBorder(8, 12, 8, 12));
         panelIcerik.add(panelArama, BorderLayout.NORTH);
 
         JLabel lblArama = new JLabel("Üye Ara:");
-        lblArama.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        lblArama.setFont(new Font("Dialog", Font.PLAIN, 13));
         panelArama.add(lblArama);
 
         txtArama = new JTextField(18);
-        txtArama.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        txtArama.setFont(new Font("Dialog", Font.PLAIN, 13));
         txtArama.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -329,7 +305,7 @@ public class panelUyeKayit extends JPanel {
         panelArama.add(txtArama);
 
         cmbRolFiltre = new JComboBox<>(new String[] { "Tümü", "OGRENCI", "OGRETMEN" });
-        cmbRolFiltre.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        cmbRolFiltre.setFont(new Font("Dialog", Font.PLAIN, 13));
         cmbRolFiltre.setPreferredSize(new Dimension(120, 26));
         cmbRolFiltre.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -338,21 +314,30 @@ public class panelUyeKayit extends JPanel {
         });
         panelArama.add(cmbRolFiltre);
 
-        // Tablo ve ScrollPane
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setBorder(new EmptyBorder(0, 16, 16, 16));
         panelIcerik.add(scrollPane, BorderLayout.CENTER);
 
         tabloUyeler = new JTable();
-        tabloUyeler.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        
+        tabloUyeler.setModel(new DefaultTableModel(new Object[][] {},
+                new String[] { "ID", "Kullanıcı No", "Ad Soyad", "Şifre", "Rol" }) {
+            boolean[] columnEditables = new boolean[] { false, false, false, false, false };
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return columnEditables[column];
+            }
+        });
+
+        tabloUyeler.setFont(new Font("Dialog", Font.PLAIN, 12));
         tabloUyeler.setRowHeight(30);
         tabloUyeler.setGridColor(new Color(203, 213, 225));
         tabloUyeler.setSelectionBackground(new Color(219, 234, 254));
         tabloUyeler.setSelectionForeground(new Color(30, 41, 59));
         tabloUyeler.setBackground(Color.WHITE);
-        tabloUyeler.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
+        tabloUyeler.getTableHeader().setFont(new Font("Dialog", Font.BOLD, 12));
         tabloUyeler.getTableHeader().setBackground(new Color(226, 232, 240));
-        tableUyelerStilUygula(tabloUyeler); // Tablonun düzenlenemez olmasını sağlar
         
         tabloUyeler.addMouseListener(new MouseAdapter() {
             @Override
@@ -370,7 +355,7 @@ public class panelUyeKayit extends JPanel {
         });
         scrollPane.setViewportView(tabloUyeler);
 
-        // Sağ Tık Menüsü (Popup Menu)
+        
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem mntmSil = new JMenuItem("Sil");
         mntmSil.addActionListener(new ActionListener() {
@@ -398,19 +383,6 @@ public class panelUyeKayit extends JPanel {
         uyeleriYenile();
     }
 
-    // --- YARDIMCI METOTLAR ---
-    
-    private void tableUyelerStilUygula(JTable table) {
-        table.setModel(new DefaultTableModel(new Object[][] {},
-                new String[] { "ID", "Kullanıcı No", "Ad Soyad", "Şifre", "Rol" }) {
-            boolean[] columnEditables = new boolean[] { false, false, false, false, false };
-
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return columnEditables[column];
-            }
-        });
-    }
 
     public void uyeleriYenile() {
         tabloUyeler.setRowSorter(null);
@@ -442,12 +414,10 @@ public class panelUyeKayit extends JPanel {
         java.util.List<RowFilter<Object, Object>> filtreler = new java.util.ArrayList<>();
 
         if (!metin.trim().isEmpty()) {
-            // Kullanıcı No veya Ad Soyad sütunlarında (1 ve 2. indeksler) ara
             filtreler.add(RowFilter.regexFilter("(?i)" + metin, 1, 2));
         }
 
         if (rol != null && !rol.equals("Tümü")) {
-            // Rol sütununda (4. indeks) tam eşleşme ara
             filtreler.add(RowFilter.regexFilter("(?i)^" + java.util.regex.Pattern.quote(rol) + "$", 4));
         }
 

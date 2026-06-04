@@ -325,7 +325,7 @@ public class panelKitapYonetim extends JPanel {
         panelIcerik.add(panelDurum, BorderLayout.SOUTH);
         
         lblSistemDurumu = new JLabel("Sistem Durumu: Toplam Kitap: 0 | Ödünçte Olan: 0");
-        lblSistemDurumu.setFont(new Font("Dialog", Font.BOLD, 16)); // Font korundu
+        lblSistemDurumu.setFont(new Font("Dialog", Font.BOLD, 16)); 
         panelDurum.add(lblSistemDurumu);
 
         JPopupMenu popupMenu = new JPopupMenu();
