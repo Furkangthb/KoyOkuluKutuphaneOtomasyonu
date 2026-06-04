@@ -1,3 +1,4 @@
+
 package View.panelOgretmen;
 
 import javax.swing.JPanel;
@@ -8,8 +9,10 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import javax.swing.RowFilter;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -26,334 +29,393 @@ import Dao.KitapDAO;
 import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
 import java.awt.Cursor;
-import java.awt.ComponentOrientation;
 import java.awt.Color;
 import javax.swing.JSeparator;
-import javax.swing.border.BevelBorder;
-import java.awt.Component;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 
 public class panelKitapYonetim extends JPanel {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTable table;
-	private JLabel lblSistemDurumu;
-	private JComboBox comboBox;
+    private JTextField txtBaslik;
+    private JTextField txtYazar;
+    private JTextField txtArama;
+    private JTable table;
+    private JLabel lblSistemDurumu;
+    private JComboBox<String> cmbKategori;
+    private JComboBox<String> cmbAramaKategori;
+    private TableRowSorter<DefaultTableModel> rowSorter;
 
-	public panelKitapYonetim() {
-		setLayout(new BorderLayout(0, 0));
+    private static final String[] KATEGORILER = {
+        "Seçiniz", "Aşk (Romantik)", "Korku", "Gerilim",
+        "Polisiye", "Bilimkurgu", "Fantastik", "Tarihi Roman",
+        "Dram", "Mizah", "Distopya / Ütopya"
+    };
 
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(92, 126, 164));
-		add(panel, BorderLayout.WEST);
-		panel.setPreferredSize(new Dimension(300, 600));
-		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[] { 0, 0, 0 };
-		gbl_panel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-		gbl_panel.columnWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
-		gbl_panel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-		panel.setLayout(gbl_panel);
-		
-		JSeparator separator_1 = new JSeparator();
-		separator_1.setForeground(new Color(92, 126, 164));
-		GridBagConstraints gbc_separator_1 = new GridBagConstraints();
-		gbc_separator_1.weightx = 1.0;
-		gbc_separator_1.ipadx = 1;
-		gbc_separator_1.gridwidth = 2;
-		gbc_separator_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_separator_1.insets = new Insets(40, 0, 5, 0);
-		gbc_separator_1.gridx = 0;
-		gbc_separator_1.gridy = 0;
-		panel.add(separator_1, gbc_separator_1);
+    public panelKitapYonetim() {
+        setLayout(new BorderLayout(0, 0));
 
-		JLabel lblNewLabel = new JLabel("Kitap Yönetim");
-		lblNewLabel.setBackground(new Color(255, 255, 255));
-		
-		
-		
-		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 22));
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.weighty = 1.0;
-		gbc_lblNewLabel.weightx = 1.0;
-		gbc_lblNewLabel.gridwidth = 2;
-		gbc_lblNewLabel.insets = new Insets(20, 0, 30, 0);
-		gbc_lblNewLabel.gridx = 0;
-		gbc_lblNewLabel.gridy = 1;
-		panel.add(lblNewLabel, gbc_lblNewLabel);
-		
-		JSeparator separator = new JSeparator();
-		separator.setForeground(new Color(92, 126, 164));
-		GridBagConstraints gbc_separator = new GridBagConstraints();
-		gbc_separator.fill = GridBagConstraints.HORIZONTAL;
-		gbc_separator.weightx = 1.0;
-		gbc_separator.gridwidth = 2;
-		gbc_separator.insets = new Insets(0, 0, 70, 0);
-		gbc_separator.gridx = 0;
-		gbc_separator.gridy = 2;
-		panel.add(separator, gbc_separator);
+        JPanel panelSol = new JPanel();
+        panelSol.setBackground(new Color(51, 65, 85));
+        panelSol.setPreferredSize(new Dimension(300, 600));
+        add(panelSol, BorderLayout.WEST);
 
-		JLabel lblNewLabel_1 = new JLabel("Başlık");
-		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-		gbc_lblNewLabel_1.anchor = GridBagConstraints.EAST;
-		gbc_lblNewLabel_1.insets = new Insets(0, 10, 5, 10);
-		gbc_lblNewLabel_1.gridx = 0;
-		gbc_lblNewLabel_1.gridy = 3;
-		panel.add(lblNewLabel_1, gbc_lblNewLabel_1);
+        GridBagLayout gbl_panel = new GridBagLayout();
+        gbl_panel.columnWidths  = new int[]    { 0, 0, 0 };
+        gbl_panel.rowHeights    = new int[]    { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        gbl_panel.columnWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
+        gbl_panel.rowWeights    = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+        panelSol.setLayout(gbl_panel);
 
-		textField = new JTextField();
-		textField.setColumns(10);
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.weightx = 1.0;
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.insets = new Insets(0, 0, 10, 20);
-		gbc_textField.gridx = 1;
-		gbc_textField.gridy = 3;
-		panel.add(textField, gbc_textField);
+        JSeparator ustAyirici = new JSeparator();
+        ustAyirici.setForeground(new Color(92, 126, 164));
+        GridBagConstraints gbc_ustAyirici = new GridBagConstraints();
+        gbc_ustAyirici.weightx = 1.0; 
+        gbc_ustAyirici.ipadx = 1; 
+        gbc_ustAyirici.gridwidth = 2;
+        gbc_ustAyirici.fill = GridBagConstraints.HORIZONTAL;
+        gbc_ustAyirici.insets = new Insets(40, 0, 5, 0);
+        gbc_ustAyirici.gridx = 0; 
+        gbc_ustAyirici.gridy = 0;
+        panelSol.add(ustAyirici, gbc_ustAyirici);
 
-		JLabel lblNewLabel_2 = new JLabel("Yazar");
-		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
-		gbc_lblNewLabel_2.anchor = GridBagConstraints.EAST;
-		gbc_lblNewLabel_2.insets = new Insets(0, 10, 5, 10);
-		gbc_lblNewLabel_2.gridx = 0;
-		gbc_lblNewLabel_2.gridy = 4;
-		panel.add(lblNewLabel_2, gbc_lblNewLabel_2);
+        JLabel lblBaslik = new JLabel("Kitap Yönetim");
+        lblBaslik.setForeground(Color.WHITE);
+        lblBaslik.setFont(new Font("Dialog", Font.BOLD, 22)); 
+        GridBagConstraints gbc_lblBaslik = new GridBagConstraints();
+        gbc_lblBaslik.weighty = 1.0; 
+        gbc_lblBaslik.weightx = 1.0; 
+        gbc_lblBaslik.gridwidth = 2;
+        gbc_lblBaslik.insets = new Insets(20, 0, 30, 0);
+        gbc_lblBaslik.gridx = 0; 
+        gbc_lblBaslik.gridy = 1;
+        panelSol.add(lblBaslik, gbc_lblBaslik);
 
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_1.insets = new Insets(0, 0, 10, 20);
-		gbc_textField_1.gridx = 1;
-		gbc_textField_1.gridy = 4;
-		panel.add(textField_1, gbc_textField_1);
+        JSeparator ortaAyirici = new JSeparator();
+        ortaAyirici.setForeground(new Color(92, 126, 164));
+        GridBagConstraints gbc_ortaAyirici = new GridBagConstraints();
+        gbc_ortaAyirici.fill = GridBagConstraints.HORIZONTAL; 
+        gbc_ortaAyirici.weightx = 1.0;
+        gbc_ortaAyirici.gridwidth = 2; 
+        gbc_ortaAyirici.insets = new Insets(0, 0, 70, 0);
+        gbc_ortaAyirici.gridx = 0; 
+        gbc_ortaAyirici.gridy = 2;
+        panelSol.add(ortaAyirici, gbc_ortaAyirici);
 
-		JLabel lblNewLabel_3 = new JLabel("Kategori");
-		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
-		gbc_lblNewLabel_3.anchor = GridBagConstraints.EAST;
-		gbc_lblNewLabel_3.insets = new Insets(0, 0, 20, 10);
-		gbc_lblNewLabel_3.gridx = 0;
-		gbc_lblNewLabel_3.gridy = 5;
-		panel.add(lblNewLabel_3, gbc_lblNewLabel_3);
+        JLabel lblKitapBaslik = new JLabel("Başlık");
+        lblKitapBaslik.setForeground(Color.WHITE);
+        GridBagConstraints gbc_lblKitapBaslik = new GridBagConstraints();
+        gbc_lblKitapBaslik.anchor = GridBagConstraints.EAST;
+        gbc_lblKitapBaslik.insets = new Insets(0, 10, 5, 10);
+        gbc_lblKitapBaslik.gridx = 0; 
+        gbc_lblKitapBaslik.gridy = 3;
+        panelSol.add(lblKitapBaslik, gbc_lblKitapBaslik);
 
-		comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] { "Seçiniz", "Aşk (Romantik)", "Korku", "Gerilim",
-				"Polisiye", "Bilimkurgu", "Fantastik", "Tarihi Roman", "Dram", "Mizah", "Distopya / Ütopya" }));
-		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox.insets = new Insets(0, 0, 10, 20);
-		gbc_comboBox.gridx = 1;
-		gbc_comboBox.gridy = 5;
-		panel.add(comboBox, gbc_comboBox);
+        txtBaslik = new JTextField();
+        txtBaslik.setColumns(10);
+        GridBagConstraints gbc_txtBaslik = new GridBagConstraints();
+        gbc_txtBaslik.weightx = 1.0; 
+        gbc_txtBaslik.fill = GridBagConstraints.HORIZONTAL;
+        gbc_txtBaslik.insets = new Insets(0, 0, 10, 20);
+        gbc_txtBaslik.gridx = 1; 
+        gbc_txtBaslik.gridy = 3;
+        panelSol.add(txtBaslik, gbc_txtBaslik);
 
-		JButton btnNewButton = new JButton("Kitap Ekle");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				KitapDAO kd = new KitapDAO();
-				String baslik = textField.getText();
-				String yazar = textField_1.getText();
-				String kategori = comboBox.getSelectedItem().toString();
-				if (baslik.trim().isEmpty() || yazar.trim().isEmpty() || kategori.equals("Seçiniz")) {
-					javax.swing.JOptionPane.showMessageDialog(null, "Lütfen tüm alanları doldurun!", "Uyarı",
-							javax.swing.JOptionPane.WARNING_MESSAGE);
-					return;
-				}
-				Model.Kitap yeniKitap = new Model.Kitap(baslik, yazar, kategori);
-				if (kd.kitapEkle(yeniKitap)) {
-					javax.swing.JOptionPane.showMessageDialog(null, "Kitap başarıyla eklendi!", "Başarılı",
-							javax.swing.JOptionPane.INFORMATION_MESSAGE);
-					tabloyuYenile();
-					textField.setText("");
-					textField_1.setText("");
-					comboBox.setSelectedIndex(0);
-				} else {
-					javax.swing.JOptionPane.showMessageDialog(null, "Kitap eklenirken hata oluştu!", "Hata",
-							javax.swing.JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnNewButton.gridwidth = 2;
-		gbc_btnNewButton.insets = new Insets(0, 20, 10, 20);
-		gbc_btnNewButton.gridx = 0;
-		gbc_btnNewButton.gridy = 6;
-		panel.add(btnNewButton, gbc_btnNewButton);
+        JLabel lblYazar = new JLabel("Yazar");
+        lblYazar.setForeground(Color.WHITE);
+        GridBagConstraints gbc_lblYazar = new GridBagConstraints();
+        gbc_lblYazar.anchor = GridBagConstraints.EAST;
+        gbc_lblYazar.insets = new Insets(0, 10, 5, 10);
+        gbc_lblYazar.gridx = 0; 
+        gbc_lblYazar.gridy = 4;
+        panelSol.add(lblYazar, gbc_lblYazar);
 
-		JButton btnKitabGncelle = new JButton("Kitabı Güncelle");
-		btnKitabGncelle.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int seciliSatir = table.getSelectedRow();
-				if (seciliSatir == -1) {
-					javax.swing.JOptionPane.showMessageDialog(null, "Güncellemek için tablodan bir kitap seçin!",
-							"Uyarı", javax.swing.JOptionPane.WARNING_MESSAGE);
-					return;
-				}
-				String baslik = textField.getText();
-				String yazar = textField_1.getText();
-				String kategori = comboBox.getSelectedItem().toString();
-				if (baslik.trim().isEmpty() || yazar.trim().isEmpty() || kategori.equals("Seçiniz")) {
-					javax.swing.JOptionPane.showMessageDialog(null, "Lütfen tüm alanları doldurun!", "Uyarı",
-							javax.swing.JOptionPane.WARNING_MESSAGE);
-					return;
-				}
-				DefaultTableModel model = (DefaultTableModel) table.getModel();
-				int kitapId = Integer.parseInt(model.getValueAt(seciliSatir, 0).toString());
-				Model.Kitap guncelKitap = new Model.Kitap(baslik, yazar, kategori);
-				guncelKitap.setKitapId(kitapId);
-				KitapDAO kd = new KitapDAO();
-				if (kd.kitapGuncelle(guncelKitap)) {
-					javax.swing.JOptionPane.showMessageDialog(null, "Kitap başarıyla güncellendi!", "Başarılı",
-							javax.swing.JOptionPane.INFORMATION_MESSAGE);
-					tabloyuYenile();
-					textField.setText("");
-					textField_1.setText("");
-					comboBox.setSelectedIndex(0);
-				} else {
-					javax.swing.JOptionPane.showMessageDialog(null, "Kitap güncellenirken hata oluştu!", "Hata",
-							javax.swing.JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
-		GridBagConstraints gbc_btnKitabGncelle = new GridBagConstraints();
-		gbc_btnKitabGncelle.fill = GridBagConstraints.HORIZONTAL;
-		gbc_btnKitabGncelle.gridwidth = 2;
-		gbc_btnKitabGncelle.insets = new Insets(0, 20, 30, 20);
-		gbc_btnKitabGncelle.gridx = 0;
-		gbc_btnKitabGncelle.gridy = 7;
-		panel.add(btnKitabGncelle, gbc_btnKitabGncelle);
-		
-		JSeparator separator_1_1 = new JSeparator();
-		separator_1_1.setForeground(new Color(92, 126, 164));
-		GridBagConstraints gbc_separator_1_1 = new GridBagConstraints();
-		gbc_separator_1_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_separator_1_1.ipadx = 1;
-		gbc_separator_1_1.gridwidth = 2;
-		gbc_separator_1_1.insets = new Insets(0, 0, 35, 0);
-		gbc_separator_1_1.gridx = 0;
-		gbc_separator_1_1.gridy = 8;
-		panel.add(separator_1_1, gbc_separator_1_1);
+        txtYazar = new JTextField();
+        txtYazar.setColumns(10);
+        GridBagConstraints gbc_txtYazar = new GridBagConstraints();
+        gbc_txtYazar.fill = GridBagConstraints.HORIZONTAL;
+        gbc_txtYazar.insets = new Insets(0, 0, 10, 20);
+        gbc_txtYazar.gridx = 1; 
+        gbc_txtYazar.gridy = 4;
+        panelSol.add(txtYazar, gbc_txtYazar);
 
-		// Sağ taraf: arama + tablo
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(92, 126, 164));
-		add(panel_1, BorderLayout.CENTER);
-		panel_1.setLayout(new BorderLayout(0, 0));
+        JLabel lblKategori = new JLabel("Kategori");
+        lblKategori.setForeground(Color.WHITE);
+        GridBagConstraints gbc_lblKategori = new GridBagConstraints();
+        gbc_lblKategori.anchor = GridBagConstraints.EAST;
+        gbc_lblKategori.insets = new Insets(0, 0, 20, 10);
+        gbc_lblKategori.gridx = 0; 
+        gbc_lblKategori.gridy = 5;
+        panelSol.add(lblKategori, gbc_lblKategori);
 
-		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(92, 126, 164));
-		panel_1.add(panel_2, BorderLayout.NORTH);
+        cmbKategori = new JComboBox<>(new DefaultComboBoxModel<>(KATEGORILER));
+        cmbKategori.setBackground(new Color(147, 147, 147));
+        GridBagConstraints gbc_cmbKategori = new GridBagConstraints();
+        gbc_cmbKategori.fill = GridBagConstraints.HORIZONTAL;
+        gbc_cmbKategori.insets = new Insets(0, 0, 10, 20);
+        gbc_cmbKategori.gridx = 1; 
+        gbc_cmbKategori.gridy = 5;
+        panelSol.add(cmbKategori, gbc_cmbKategori);
 
-		JLabel lblNewLabel_4 = new JLabel("Kitap Ara:");
-		panel_2.add(lblNewLabel_4);
+        JButton btnEkle = new JButton("Kitap Ekle");
+        btnEkle.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String baslik  = txtBaslik.getText().trim();
+                String yazar   = txtYazar.getText().trim();
+                String kategori = (String) cmbKategori.getSelectedItem();
 
-		textField_2 = new JTextField();
-		textField_2.setColumns(20);
-		textField_2.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent e) {
-				DefaultTableModel model = (DefaultTableModel) table.getModel();
-				javax.swing.table.TableRowSorter<DefaultTableModel> aramaMotoru = new javax.swing.table.TableRowSorter<>(
-						model);
-				table.setRowSorter(aramaMotoru);
-				String arananKelime = textField_2.getText();
-				if (arananKelime.trim().length() == 0) {
-					aramaMotoru.setRowFilter(null);
-				} else {
-					aramaMotoru.setRowFilter(javax.swing.RowFilter.regexFilter("(?i)" + arananKelime));
-				}
-			}
-		});
-		panel_2.add(textField_2);
+                if (baslik.isEmpty() || yazar.isEmpty() || "Seçiniz".equals(kategori)) {
+                    JOptionPane.showMessageDialog(null, "Lütfen tüm alanları doldurun!", "Uyarı", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
 
-		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(new Color(92, 126, 164));
-		panel_1.add(panel_3, BorderLayout.SOUTH);
-		lblSistemDurumu = new JLabel("Sistem Durumu: Toplam Kitap: 0 | Ödünçte Olan: 0");
-		lblSistemDurumu.setFont(new Font("Dialog", Font.BOLD, 16));
-		panel_3.add(lblSistemDurumu);
+                KitapDAO kd = new KitapDAO();
+                Model.Kitap yeniKitap = new Model.Kitap(baslik, yazar, kategori);
+                
+                if (kd.kitapEkle(yeniKitap)) {
+                    JOptionPane.showMessageDialog(null, "Kitap başarıyla eklendi!", "Başarılı", JOptionPane.INFORMATION_MESSAGE);
+                    tabloyuYenile();
+                    formuTemizle();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Kitap eklenirken hata oluştu!", "Hata", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        GridBagConstraints gbc_btnEkle = new GridBagConstraints();
+        gbc_btnEkle.fill = GridBagConstraints.HORIZONTAL; 
+        gbc_btnEkle.gridwidth = 2;
+        gbc_btnEkle.insets = new Insets(0, 20, 10, 20);
+        gbc_btnEkle.gridx = 0; 
+        gbc_btnEkle.gridy = 6;
+        panelSol.add(btnEkle, gbc_btnEkle);
 
-		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		panel_1.add(scrollPane, BorderLayout.CENTER);
+        JButton btnGuncelle = new JButton("Kitabı Güncelle");
+        btnGuncelle.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int viewRow = table.getSelectedRow();
+                if (viewRow == -1) {
+                    JOptionPane.showMessageDialog(null, "Güncellemek için tablodan bir kitap seçin!", "Uyarı", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
 
-		table = new JTable();
-		table.setBackground(new Color(92, 126, 164));
-		table.setGridColor(new Color(122, 138, 153));
-		table.setRowHeight(25);
-		table.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				int seciliSatir = table.getSelectedRow();
-				if (seciliSatir >= 0) {
-					DefaultTableModel model = (DefaultTableModel) table.getModel();
-					textField.setText(model.getValueAt(seciliSatir, 1).toString());
-					textField_1.setText(model.getValueAt(seciliSatir, 2).toString());
-					comboBox.setSelectedItem(model.getValueAt(seciliSatir, 3).toString());
-				}
-			}
+                String baslik   = txtBaslik.getText().trim();
+                String yazar    = txtYazar.getText().trim();
+                String kategori = (String) cmbKategori.getSelectedItem();
 
-			@Override
-			public void mousePressed(MouseEvent e) {
-				int r = table.rowAtPoint(e.getPoint());
-				if (r >= 0 && r < table.getRowCount()) {
-					table.setRowSelectionInterval(r, r);
-				}
-			}
-		});
-		table.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "ID", "Kitap Adı", "Yazar", "Kategori", "Durum" }));
-		scrollPane.setViewportView(table);
+                if (baslik.isEmpty() || yazar.isEmpty() || "Seçiniz".equals(kategori)) {
+                    JOptionPane.showMessageDialog(null, "Lütfen tüm alanları doldurun!", "Uyarı", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
 
-		JPopupMenu popupMenu = new JPopupMenu();
-		table.setComponentPopupMenu(popupMenu);
-		scrollPane.setComponentPopupMenu(popupMenu);
+                int modelRow = table.convertRowIndexToModel(viewRow);
+                DefaultTableModel model = (DefaultTableModel) table.getModel();
+                int kitapId = Integer.parseInt(model.getValueAt(modelRow, 0).toString());
 
-		JMenuItem mnıtmNewMenuItem = new JMenuItem("Sil");
-		mnıtmNewMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				int seciliSatir = table.getSelectedRow();
-				if (seciliSatir != -1) {
-					int cevap = javax.swing.JOptionPane.showConfirmDialog(null,
-							"Bu kitabı silmek istediğinize emin misiniz?", "Silme Onayı",
-							javax.swing.JOptionPane.YES_NO_OPTION);
+                Model.Kitap guncelKitap = new Model.Kitap(baslik, yazar, kategori);
+                guncelKitap.setKitapId(kitapId);
 
-					if (cevap == javax.swing.JOptionPane.YES_OPTION) {
-						DefaultTableModel model = (DefaultTableModel) table.getModel();
-						int kitapId = Integer.parseInt(model.getValueAt(seciliSatir, 0).toString());
+                KitapDAO kd = new KitapDAO();
+                if (kd.kitapGuncelle(guncelKitap)) {
+                    JOptionPane.showMessageDialog(null, "Kitap başarıyla güncellendi!", "Başarılı", JOptionPane.INFORMATION_MESSAGE);
+                    tabloyuYenile();
+                    formuTemizle();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Kitap güncellenirken hata oluştu!", "Hata", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        GridBagConstraints gbc_btnGuncelle = new GridBagConstraints();
+        gbc_btnGuncelle.fill = GridBagConstraints.HORIZONTAL; 
+        gbc_btnGuncelle.gridwidth = 2;
+        gbc_btnGuncelle.insets = new Insets(0, 20, 30, 20);
+        gbc_btnGuncelle.gridx = 0; 
+        gbc_btnGuncelle.gridy = 7;
+        panelSol.add(btnGuncelle, gbc_btnGuncelle);
 
-						KitapDAO kd = new KitapDAO();
-						if (kd.kitapSil(kitapId)) {
-							javax.swing.JOptionPane.showMessageDialog(null, "Kitap başarıyla silindi!");
-							tabloyuYenile();
-						} else {
-							javax.swing.JOptionPane.showMessageDialog(null, "Hata oluştu!", "Hata",
-									javax.swing.JOptionPane.ERROR_MESSAGE);
-						}
-					}
-				}
-			}
-		});
-		popupMenu.add(mnıtmNewMenuItem);
+        JSeparator altAyirici = new JSeparator();
+        altAyirici.setForeground(new Color(92, 126, 164));
+        GridBagConstraints gbc_altAyirici = new GridBagConstraints();
+        gbc_altAyirici.fill = GridBagConstraints.HORIZONTAL; 
+        gbc_altAyirici.ipadx = 1;
+        gbc_altAyirici.gridwidth = 2; 
+        gbc_altAyirici.insets = new Insets(0, 0, 35, 0);
+        gbc_altAyirici.gridx = 0; 
+        gbc_altAyirici.gridy = 8;
+        panelSol.add(altAyirici, gbc_altAyirici);
 
-		tabloyuYenile();
-	}
+        JPanel panelIcerik = new JPanel();
+        panelIcerik.setBackground(new Color(92, 126, 164));
+        panelIcerik.setLayout(new BorderLayout(0, 0));
+        add(panelIcerik, BorderLayout.CENTER);
 
-	public void tabloyuYenile() {
-		DefaultTableModel model = (DefaultTableModel) table.getModel();
-		model.setRowCount(0);
-		KitapDAO kd = new KitapDAO();
-		java.util.List<Model.Kitap> kitapListesi = kd.tumKitaplariGetir();
-		int toplamKitap = 0, oduncteKitap = 0;
-		for (Model.Kitap k : kitapListesi) {
-			model.addRow(new Object[] { k.getKitapId(), k.getBaslik(), k.getYazar(), k.getKategori(), k.getDurum() });
-			toplamKitap++;
-			if (!k.getDurum().equals("Rafta"))
-				oduncteKitap++;
-		}
-		if (lblSistemDurumu != null)
-			lblSistemDurumu.setText("Sistem Durumu: Toplam Kitap: " + toplamKitap + " | Ödünçte Olan: " + oduncteKitap);
-	}
+        JPanel panelArama = new JPanel();
+        panelArama.setBackground(new Color(238, 238, 238));
+        panelIcerik.add(panelArama, BorderLayout.NORTH);
+
+        panelArama.add(new JLabel("Kitap Ara:"));
+
+        txtArama = new JTextField();
+        txtArama.setColumns(20);
+        txtArama.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                uygulaFiltre();
+            }
+        });
+        panelArama.add(txtArama);
+
+        cmbAramaKategori = new JComboBox<>(new DefaultComboBoxModel<>(KATEGORILER));
+        cmbAramaKategori.setBackground(new Color(147, 147, 147));
+        cmbAramaKategori.setPreferredSize(new Dimension(150, 26));
+        cmbAramaKategori.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                uygulaFiltre();
+            }
+        });
+        panelArama.add(cmbAramaKategori);
+
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+        panelIcerik.add(scrollPane, BorderLayout.CENTER);
+
+        table = new JTable();
+        table.setBackground(new Color(84, 100, 123));
+        table.setGridColor(new Color(122, 138, 153));
+        table.setRowHeight(25);
+        table.setModel(new DefaultTableModel(
+            new Object[][] {},
+            new String[] { "ID", "Kitap Adı", "Yazar", "Kategori", "Durum" }
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) { 
+                return false; 
+            }
+        });
+        scrollPane.setViewportView(table);
+
+        rowSorter = new TableRowSorter<>((DefaultTableModel) table.getModel());
+        table.setRowSorter(rowSorter);
+
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int viewRow = table.getSelectedRow();
+                if (viewRow >= 0) {
+                    int modelRow = table.convertRowIndexToModel(viewRow);
+                    DefaultTableModel model = (DefaultTableModel) table.getModel();
+                    txtBaslik.setText(model.getValueAt(modelRow, 1).toString());
+                    txtYazar.setText(model.getValueAt(modelRow, 2).toString());
+                    cmbKategori.setSelectedItem(model.getValueAt(modelRow, 3).toString());
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                int r = table.rowAtPoint(e.getPoint());
+                if (r >= 0 && r < table.getRowCount()) {
+                    table.setRowSelectionInterval(r, r);
+                }
+            }
+        });
+
+        JPanel panelDurum = new JPanel();
+        panelDurum.setBackground(new Color(238, 238, 238));
+        panelIcerik.add(panelDurum, BorderLayout.SOUTH);
+        
+        lblSistemDurumu = new JLabel("Sistem Durumu: Toplam Kitap: 0 | Ödünçte Olan: 0");
+        lblSistemDurumu.setFont(new Font("Dialog", Font.BOLD, 16)); // Font korundu
+        panelDurum.add(lblSistemDurumu);
+
+        JPopupMenu popupMenu = new JPopupMenu();
+        table.setComponentPopupMenu(popupMenu);
+        scrollPane.setComponentPopupMenu(popupMenu);
+
+        JMenuItem mnuSil = new JMenuItem("Sil");
+        mnuSil.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int viewRow = table.getSelectedRow();
+                if (viewRow == -1) return;
+
+                int cevap = JOptionPane.showConfirmDialog(null,
+                    "Bu kitabı silmek istediğinize emin misiniz?", "Silme Onayı",
+                    JOptionPane.YES_NO_OPTION);
+
+                if (cevap == JOptionPane.YES_OPTION) {
+                    int modelRow = table.convertRowIndexToModel(viewRow);
+                    DefaultTableModel model = (DefaultTableModel) table.getModel();
+                    int kitapId = Integer.parseInt(model.getValueAt(modelRow, 0).toString());
+
+                    KitapDAO kd = new KitapDAO();
+                    if (kd.kitapSil(kitapId)) {
+                        JOptionPane.showMessageDialog(null, "Kitap başarıyla silindi!");
+                        tabloyuYenile();
+                        formuTemizle();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Hata oluştu!", "Hata", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
+        popupMenu.add(mnuSil);
+
+        tabloyuYenile();
+    }
+
+    private void uygulaFiltre() {
+        List<RowFilter<Object, Object>> filtreler = new ArrayList<>();
+
+        String arananKelime = txtArama.getText().trim();
+        if (!arananKelime.isEmpty()) {
+            filtreler.add(RowFilter.regexFilter("(?i)" + arananKelime));
+        }
+
+        String secilenKategori = (String) cmbAramaKategori.getSelectedItem();
+        if (secilenKategori != null && !"Seçiniz".equals(secilenKategori)) {
+            filtreler.add(RowFilter.regexFilter("(?i)^" + Pattern.quote(secilenKategori) + "$", 3));
+        }
+
+        if (filtreler.isEmpty()) {
+            rowSorter.setRowFilter(null);
+        } else if (filtreler.size() == 1) {
+            rowSorter.setRowFilter(filtreler.get(0));
+        } else {
+            rowSorter.setRowFilter(RowFilter.andFilter(filtreler));
+        }
+    }
+
+    private void formuTemizle() {
+        txtBaslik.setText("");
+        txtYazar.setText("");
+        cmbKategori.setSelectedIndex(0);
+        table.clearSelection();
+    }
+
+    public void tabloyuYenile() {
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
+
+        KitapDAO kd = new KitapDAO();
+        java.util.List<Model.Kitap> kitapListesi = kd.tumKitaplariGetir();
+
+        int toplamKitap = 0, oduncteKitap = 0;
+        for (Model.Kitap k : kitapListesi) {
+            model.addRow(new Object[] {
+                k.getKitapId(), k.getBaslik(), k.getYazar(),
+                k.getKategori(), k.getDurum()
+            });
+            toplamKitap++;
+            if (!"Rafta".equals(k.getDurum())) oduncteKitap++;
+        }
+
+        if (lblSistemDurumu != null) {
+            lblSistemDurumu.setText(
+                "Sistem Durumu: Toplam Kitap: " + toplamKitap +
+                " | Ödünçte Olan: " + oduncteKitap);
+        }
+
+        uygulaFiltre();
+    }
 }
+

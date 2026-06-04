@@ -12,28 +12,55 @@ import java.util.List;
 
 public class OduncDAO {
 
-	public boolean oduncVer(int kitapId, String ogrenciNo) {
-		String ekleSorgu = "INSERT INTO Islemler (Kitap_ID, Kullanici_ID, Alis_Tarihi, Teslim_Edildi_Mi) "
-				+ "VALUES (?, (SELECT Kullanici_ID FROM Kullanicilar WHERE OgrenciNo = ?), ?, 0)";
+	private static final int ODUNC_SURE_GUN = 14;
 
-		String guncelleSorgu = "UPDATE Kitaplar SET Durum = 'Ödünçte' WHERE Kitap_ID = ?";
+	public boolean oduncVer(int kitapId, String ogrenciNo) {
+		String durumKontrol = "SELECT Durum FROM Kitaplar WHERE Kitap_ID = ?";
+		String ogrenciKontrol = "SELECT Kullanici_ID FROM Kullanicilar WHERE OgrenciNo = ? AND Rol = 'OGRENCI'";
+		String ekleSorgu = "INSERT INTO Islemler (Kitap_ID, Kullanici_ID, Alis_Tarihi, Teslim_Edildi_Mi) "
+				+ "VALUES (?, ?, ?, 0)";
+		String guncelleSorgu = "UPDATE Kitaplar SET Durum = 'Ödünçte' WHERE Kitap_ID = ? AND Durum = 'Rafta'";
 
 		try (Connection conn = DBConnection.connect()) {
+			if (conn == null)
+				return false;
 			conn.setAutoCommit(false);
 
-			try (PreparedStatement pstmtEkle = conn.prepareStatement(ekleSorgu);
-					PreparedStatement pstmtGuncelle = conn.prepareStatement(guncelleSorgu)) {
+			try (PreparedStatement pstmtDurum = conn.prepareStatement(durumKontrol);
+					PreparedStatement pstmtOgrenci = conn.prepareStatement(ogrenciKontrol)) {
 
-				pstmtEkle.setInt(1, kitapId);
-				pstmtEkle.setString(2, ogrenciNo);
-				pstmtEkle.setString(3, LocalDate.now().toString());
-				pstmtEkle.executeUpdate();
+				pstmtDurum.setInt(1, kitapId);
+				ResultSet rsKitap = pstmtDurum.executeQuery();
+				if (!rsKitap.next() || !"Rafta".equals(rsKitap.getString("Durum"))) {
+					conn.rollback();
+					return false;
+				}
 
-				pstmtGuncelle.setInt(1, kitapId);
-				pstmtGuncelle.executeUpdate();
+				pstmtOgrenci.setString(1, ogrenciNo);
+				ResultSet rsOgrenci = pstmtOgrenci.executeQuery();
+				if (!rsOgrenci.next()) {
+					conn.rollback();
+					return false;
+				}
+				int kullaniciId = rsOgrenci.getInt("Kullanici_ID");
 
-				conn.commit();
-				return true;
+				try (PreparedStatement pstmtEkle = conn.prepareStatement(ekleSorgu);
+						PreparedStatement pstmtGuncelle = conn.prepareStatement(guncelleSorgu)) {
+
+					pstmtEkle.setInt(1, kitapId);
+					pstmtEkle.setInt(2, kullaniciId);
+					pstmtEkle.setString(3, LocalDate.now().toString());
+					pstmtEkle.executeUpdate();
+
+					pstmtGuncelle.setInt(1, kitapId);
+					if (pstmtGuncelle.executeUpdate() == 0) {
+						conn.rollback();
+						return false;
+					}
+
+					conn.commit();
+					return true;
+				}
 			} catch (Exception ex) {
 				conn.rollback();
 				System.out.println("Ödünç verme hatası: " + ex.getMessage());
@@ -134,4 +161,46 @@ public class OduncDAO {
         }
         return liste;
     }
+
+	public int ogrenciOkunanKitapSayisi(String ogrenciNo) {
+		String sorgu = "SELECT COUNT(*) AS Sayi FROM Islemler i "
+				+ "JOIN Kullanicilar u ON i.Kullanici_ID = u.Kullanici_ID "
+				+ "WHERE u.OgrenciNo = ? AND i.Teslim_Edildi_Mi = 1";
+		try (Connection conn = DBConnection.connect();
+				PreparedStatement pstmt = conn.prepareStatement(sorgu)) {
+			pstmt.setString(1, ogrenciNo);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next())
+				return rs.getInt("Sayi");
+		} catch (Exception e) {
+			System.out.println("Okunan kitap sayısı hatası: " + e.getMessage());
+		}
+		return 0;
+	}
+
+	public int ogrenciAktifOduncSayisi(String ogrenciNo) {
+		String sorgu = "SELECT COUNT(*) AS Sayi FROM Islemler i "
+				+ "JOIN Kullanicilar u ON i.Kullanici_ID = u.Kullanici_ID "
+				+ "WHERE u.OgrenciNo = ? AND i.Teslim_Edildi_Mi = 0";
+		try (Connection conn = DBConnection.connect();
+				PreparedStatement pstmt = conn.prepareStatement(sorgu)) {
+			pstmt.setString(1, ogrenciNo);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next())
+				return rs.getInt("Sayi");
+		} catch (Exception e) {
+			System.out.println("Aktif ödünç sayısı hatası: " + e.getMessage());
+		}
+		return 0;
+	}
+
+	public static boolean gecikmisMi(String alisTarihi) {
+		if (alisTarihi == null || alisTarihi.isBlank())
+			return false;
+		try {
+			return LocalDate.now().isAfter(LocalDate.parse(alisTarihi).plusDays(ODUNC_SURE_GUN));
+		} catch (Exception e) {
+			return false;
+		}
+	}
 }

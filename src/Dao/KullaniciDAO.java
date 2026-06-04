@@ -4,23 +4,14 @@ import Model.Kullanici;
 import VeriTabani.DBConnection;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 public class KullaniciDAO {
 
-	private final String URL = "jdbc:sqlite:kutuphane.db";
-
-	private Connection baglantiAc() throws SQLException {
-		return DriverManager.getConnection(URL);
-	}
-
-	// --- MEVCUT GİRİŞ YAPMA METODUN (HİÇ DOKUNULMADI) ---
 	public Kullanici girisYap(String girisNo, String sifre, String rol) {
 		Kullanici aktifKullanici = null;
 		String sorgu = "SELECT * FROM Kullanicilar WHERE OgrenciNo = ? AND Sifre = ? AND Rol = ?";
@@ -136,12 +127,26 @@ public class KullaniciDAO {
 	}
 
 	public boolean kullaniciSil(int id) {
+		String aktifOdunc = "SELECT COUNT(*) AS Sayi FROM Islemler WHERE Kullanici_ID = ? AND Teslim_Edildi_Mi = 0";
 		String sorgu = "DELETE FROM Kullanicilar WHERE Kullanici_ID = ?";
 
-		try (Connection conn = DBConnection.connect(); PreparedStatement pstmt = conn.prepareStatement(sorgu)) {
-			pstmt.setInt(1, id);
-			pstmt.executeUpdate();
-			return true;
+		try (Connection conn = DBConnection.connect()) {
+			if (conn == null)
+				return false;
+
+			try (PreparedStatement pstmtKontrol = conn.prepareStatement(aktifOdunc)) {
+				pstmtKontrol.setInt(1, id);
+				ResultSet rs = pstmtKontrol.executeQuery();
+				if (rs.next() && rs.getInt("Sayi") > 0) {
+					System.out.println("Kullanıcı silme hatası: Üyenin iade edilmemiş kitabı var.");
+					return false;
+				}
+			}
+
+			try (PreparedStatement pstmt = conn.prepareStatement(sorgu)) {
+				pstmt.setInt(1, id);
+				return pstmt.executeUpdate() > 0;
+			}
 		} catch (Exception e) {
 			System.out.println("Kullanıcı silme hatası: " + e.getMessage());
 			return false;

@@ -56,15 +56,26 @@ public class KitapDAO {
     }
 
     public boolean kitapSil(int kitapId) {
+        String aktifKontrol = "SELECT COUNT(*) AS Sayi FROM Islemler WHERE Kitap_ID = ? AND Teslim_Edildi_Mi = 0";
         String sorgu = "DELETE FROM Kitaplar WHERE Kitap_ID = ?";
-        
-        try (Connection conn = DBConnection.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sorgu)) {
-            
-            pstmt.setInt(1, kitapId);
-            pstmt.executeUpdate();
-            return true;
-            
+
+        try (Connection conn = DBConnection.connect()) {
+            if (conn == null)
+                return false;
+
+            try (PreparedStatement pstmtKontrol = conn.prepareStatement(aktifKontrol)) {
+                pstmtKontrol.setInt(1, kitapId);
+                ResultSet rs = pstmtKontrol.executeQuery();
+                if (rs.next() && rs.getInt("Sayi") > 0) {
+                    System.out.println("Kitap silme hatası: Kitap şu an ödünçte.");
+                    return false;
+                }
+            }
+
+            try (PreparedStatement pstmt = conn.prepareStatement(sorgu)) {
+                pstmt.setInt(1, kitapId);
+                return pstmt.executeUpdate() > 0;
+            }
         } catch (Exception e) {
             System.out.println("Kitap silme hatası: " + e.getMessage());
             return false;

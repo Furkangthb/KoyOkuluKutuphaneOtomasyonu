@@ -27,6 +27,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import Controller.KullaniciController;
+
 public class GirisEkrani extends JFrame {
 
 	private static final long serialVersionUID = 1L;
@@ -41,17 +42,20 @@ public class GirisEkrani extends JFrame {
 	 */
 	public static void main(String[] args) {
 		try {
-		    for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-		        if ("Nimbus".equals(info.getName())) {
-		            javax.swing.UIManager.setLookAndFeel(info.getClassName());
-		            break;
-		        }
-		    }
+			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(info.getName())) {
+					javax.swing.UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+			javax.swing.UIManager.put("control", new Color(248, 250, 252));
+			javax.swing.UIManager.put("nimbusBase", new Color(30, 41, 59));
+			javax.swing.UIManager.put("nimbusSelectionBackground", new Color(37, 99, 235));
 		} catch (Exception ex) {
-		    ex.printStackTrace();
+			ex.printStackTrace();
 		}
 		EventQueue.invokeLater(new Runnable() {
-			
+
 			public void run() {
 				try {
 					GirisEkrani frame = new GirisEkrani();
@@ -67,14 +71,18 @@ public class GirisEkrani extends JFrame {
 	 * Create the frame.
 	 */
 	public GirisEkrani() {
+		VeriTabani.DBHelper.tablolariOlustur();
+		VeriTabani.DBHelper.testKullanicilariniEkle();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 900, 600);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel = new JPanel();
+		panel.setBackground(new Color(192, 191, 188));
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new CardLayout(0, 0));
 
@@ -97,7 +105,7 @@ public class GirisEkrani extends JFrame {
 		panelSol.setLayout(gbl_panelSol);
 
 		JLabel lblOgrenciBaslik = new JLabel("Kütüphaneye Hoş Geldiniz");
-		lblOgrenciBaslik.setFont(new Font("Dialog", Font.BOLD, 20));
+		lblOgrenciBaslik.setFont(new Font("Z003", Font.BOLD, 28));
 		GridBagConstraints gbc_lblOgrenciBaslik = new GridBagConstraints();
 		gbc_lblOgrenciBaslik.anchor = GridBagConstraints.SOUTH;
 		gbc_lblOgrenciBaslik.weighty = 1.0;
@@ -108,10 +116,12 @@ public class GirisEkrani extends JFrame {
 		panelSol.add(lblOgrenciBaslik, gbc_lblOgrenciBaslik);
 
 		JButton btnOgretmenGiris = new JButton("Öğretmen Girişi");
+		btnOgretmenGiris.setForeground(new Color(0, 0, 0));
+		btnOgretmenGiris.setFont(new Font("Z003", Font.BOLD, 16));
 		btnOgretmenGiris.setBackground(new Color(192, 191, 188));
 		btnOgretmenGiris.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CardLayout cl = (CardLayout) panel.getLayout(); 
+				CardLayout cl = (CardLayout) panel.getLayout();
 				cl.show(panel, "OGRETMEN");
 			}
 		});
@@ -125,6 +135,7 @@ public class GirisEkrani extends JFrame {
 		panelSol.add(btnOgretmenGiris, gbc_btnOgretmenGiris);
 
 		JPanel panelSag = new JPanel();
+		panelSag.setBackground(new Color(255, 255, 255));
 		panelSag.setOpaque(false);
 		panelOgrenci.add(panelSag);
 		GridBagLayout gbl_panelSag = new GridBagLayout();
@@ -136,7 +147,7 @@ public class GirisEkrani extends JFrame {
 		panelSag.setLayout(gbl_panelSag);
 
 		JLabel lblOgrenciGirisi = new JLabel("Öğrenci Girişi");
-		lblOgrenciGirisi.setFont(new Font("Dialog", Font.BOLD, 24));
+		lblOgrenciGirisi.setFont(new Font("Z003", Font.BOLD, 28));
 		GridBagConstraints gbc_lblOgrenciGirisi = new GridBagConstraints();
 		gbc_lblOgrenciGirisi.gridwidth = 2;
 		gbc_lblOgrenciGirisi.weighty = 1.0;
@@ -148,6 +159,7 @@ public class GirisEkrani extends JFrame {
 		panelSag.add(lblOgrenciGirisi, gbc_lblOgrenciGirisi);
 
 		JLabel lblNewLabel_2 = new JLabel("Öğrenci No:");
+		lblNewLabel_2.setFont(new Font("Z003", Font.BOLD, 20));
 		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
 		gbc_lblNewLabel_2.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_2.gridx = 0;
@@ -166,6 +178,7 @@ public class GirisEkrani extends JFrame {
 		textOgrenciNo.setColumns(10);
 
 		JLabel lblNewLabel_3 = new JLabel("Şifre:");
+		lblNewLabel_3.setFont(new Font("Z003", Font.BOLD, 20));
 		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
 		gbc_lblNewLabel_3.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel_3.insets = new Insets(5, 20, 5, 5);
@@ -183,13 +196,17 @@ public class GirisEkrani extends JFrame {
 		panelSag.add(SifreOgrenci, gbc_sifreOgrenci);
 
 		JButton btnOgrenciGirisYap = new JButton("Giriş Yap");
+		btnOgrenciGirisYap.setFocusPainted(false);
+		btnOgrenciGirisYap.setBorderPainted(false);
+		btnOgrenciGirisYap.setFont(new Font("Z003", Font.BOLD, 16));
+		btnOgrenciGirisYap.setForeground(new Color(0, 0, 0));
 		btnOgrenciGirisYap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				KullaniciController kc=new KullaniciController(GirisEkrani.this);
+				KullaniciController kc = new KullaniciController(GirisEkrani.this);
 				kc.ogrenciGirisKontrol(textOgrenciNo.getText(), new String(SifreOgrenci.getPassword()));
 			}
 		});
-		btnOgrenciGirisYap.setBackground(new Color(192, 191, 188));
+		btnOgrenciGirisYap.setBackground(new Color(154, 153, 150));
 		GridBagConstraints gbc_btnOgrenciGirisYap = new GridBagConstraints();
 		gbc_btnOgrenciGirisYap.gridwidth = 2;
 		gbc_btnOgrenciGirisYap.insets = new Insets(20, 40, 0, 40);
@@ -201,31 +218,32 @@ public class GirisEkrani extends JFrame {
 		panelSag.add(btnOgrenciGirisYap, gbc_btnOgrenciGirisYap);
 
 		JPanel panelOgretmen = new JPanel() {
-		    @Override
-		    protected void paintComponent(Graphics g) {
-		        super.paintComponent(g);
-		        Image img = new ImageIcon("images/kapaliKitap.png").getImage();
-		        
-		        int imgW = img.getWidth(this);
-		        int imgH = img.getHeight(this);
-		        
-		        if (imgW > 0 && imgH > 0) {
-		            double oran = Math.min((double) getWidth() / imgW, (double) getHeight() / imgH);
-		            
-		            int yeniGenislik = (int) (imgW * oran);
-		            int yeniYukseklik = (int) (imgH * oran);
-		            
-		            int x = (getWidth() - yeniGenislik) / 2;
-		            int y = (getHeight() - yeniYukseklik) / 2;
-		            
-		            g.drawImage(img, x, y, yeniGenislik, yeniYukseklik, this);
-		        }
-		    }
+			@Override
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				Image img = new ImageIcon("images/kapaliKitap.png").getImage();
+
+				int imgW = img.getWidth(this);
+				int imgH = img.getHeight(this);
+
+				if (imgW > 0 && imgH > 0) {
+					double oran = Math.min((double) getWidth() / imgW, (double) getHeight() / imgH);
+
+					int yeniGenislik = (int) (imgW * oran);
+					int yeniYukseklik = (int) (imgH * oran);
+
+					int x = (getWidth() - yeniGenislik) / 2;
+					int y = (getHeight() - yeniYukseklik) / 2;
+
+					g.drawImage(img, x, y, yeniGenislik, yeniYukseklik, this);
+				}
+			}
 		};
 		panel.add(panelOgretmen, "OGRETMEN");
 		panelOgretmen.setLayout(new GridBagLayout());
 
 		JPanel panelOgretmenIc = new JPanel();
+		panelOgretmenIc.setBackground(new Color(30,41,59));
 		panelOgretmenIc.setPreferredSize(new Dimension(320, 280));
 		panelOgretmenIc.setOpaque(false);
 		GridBagConstraints gbc_panelOgretmenIc = new GridBagConstraints();
@@ -241,7 +259,7 @@ public class GirisEkrani extends JFrame {
 
 		JLabel lblYonetimGirisi = new JLabel("Yönetim Girişi");
 		lblYonetimGirisi.setForeground(new Color(245, 194, 17));
-		lblYonetimGirisi.setFont(new Font("Dialog", Font.BOLD, 26));
+		lblYonetimGirisi.setFont(new Font("Z003", Font.PLAIN, 28));
 		GridBagConstraints gbc_lblYonetimGirisi = new GridBagConstraints();
 		gbc_lblYonetimGirisi.weighty = 1.0;
 		gbc_lblYonetimGirisi.weightx = 1.0;
@@ -253,6 +271,7 @@ public class GirisEkrani extends JFrame {
 		panelOgretmenIc.add(lblYonetimGirisi, gbc_lblYonetimGirisi);
 
 		JLabel lblKullaniciAdi = new JLabel("Kullanıcı Adı:");
+		lblKullaniciAdi.setFont(new Font("Z003", Font.PLAIN, 20));
 		lblKullaniciAdi.setForeground(new Color(245, 194, 17));
 		GridBagConstraints gbc_lblKullaniciAdi = new GridBagConstraints();
 		gbc_lblKullaniciAdi.anchor = GridBagConstraints.EAST;
@@ -272,6 +291,7 @@ public class GirisEkrani extends JFrame {
 		textFieldKullaniciAdi.setColumns(10);
 
 		JLabel lblNewLabel_6 = new JLabel("Şifre:");
+		lblNewLabel_6.setFont(new Font("Z003", Font.PLAIN, 20));
 		lblNewLabel_6.setForeground(new Color(245, 194, 17));
 		GridBagConstraints gbc_lblNewLabel_6 = new GridBagConstraints();
 		gbc_lblNewLabel_6.anchor = GridBagConstraints.EAST;
@@ -290,21 +310,13 @@ public class GirisEkrani extends JFrame {
 		panelOgretmenIc.add(passwordFieldKullanici, gbc_passwordFieldKullanici);
 
 		JButton btnKullaniciGirisYap = new JButton("Giriş Yap");
-		btnKullaniciGirisYap.setBackground(new Color(87, 227, 137));
-		btnKullaniciGirisYap.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnKullaniciGirisYap.setBackground(new Color(46, 194, 126));
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnKullaniciGirisYap.setBackground(new Color(87, 227, 137));
-			}
-		});
+		btnKullaniciGirisYap.setFont(new Font("Z003", Font.PLAIN, 20));
+		btnKullaniciGirisYap.setBackground(new Color(192, 191, 188));
 		btnKullaniciGirisYap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				KullaniciController kc=new KullaniciController(GirisEkrani.this);
-				kc.ogretmenGirisKontrol(textFieldKullaniciAdi.getText(), new String(passwordFieldKullanici.getPassword()));
+				KullaniciController kc = new KullaniciController(GirisEkrani.this);
+				kc.ogretmenGirisKontrol(textFieldKullaniciAdi.getText(),
+						new String(passwordFieldKullanici.getPassword()));
 			}
 		});
 		GridBagConstraints gbc_btnKullaniciGirisYap = new GridBagConstraints();
@@ -315,26 +327,18 @@ public class GirisEkrani extends JFrame {
 		gbc_btnKullaniciGirisYap.gridx = 0;
 		gbc_btnKullaniciGirisYap.gridy = 3;
 		panelOgretmenIc.add(btnKullaniciGirisYap, gbc_btnKullaniciGirisYap);
-		
+
 		JButton btnOgrenciGirisi = new JButton("Öğrenci Girişi");
-		btnOgrenciGirisi.setBackground(new Color(87, 227, 137));
-		btnOgrenciGirisi.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btnOgrenciGirisi.setBackground(new Color(46, 194, 126));
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btnOgrenciGirisi.setBackground(new Color(87, 227, 137));
-			}
-		});
+		btnOgrenciGirisi.setFont(new Font("Z003", Font.PLAIN, 18));
+		btnOgrenciGirisi.setBackground(new Color(192, 191, 188));
+		
 		btnOgrenciGirisi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CardLayout cl = (CardLayout) panel.getLayout();
 				cl.show(panel, "OGRENCI");
 			}
 		});
-		
+
 		GridBagConstraints gbc_btnOgrenciGirisi = new GridBagConstraints();
 		gbc_btnOgrenciGirisi.gridwidth = 2;
 		gbc_btnOgrenciGirisi.insets = new Insets(0, 0, 5, 5);

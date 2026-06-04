@@ -35,6 +35,7 @@ public class RaporDAO {
         List<String[]> liste = new ArrayList<>();
         String sorgu = "SELECT u.Ad || ' ' || u.Soyad as AdSoyad, COUNT(i.Islem_ID) as Sayi " +
                        "FROM Islemler i JOIN Kullanicilar u ON i.Kullanici_ID = u.Kullanici_ID " +
+                       "WHERE u.Rol = 'OGRENCI' " +
                        "GROUP BY u.Kullanici_ID ORDER BY Sayi DESC";
 
         try (Connection conn = DBConnection.connect();
@@ -54,7 +55,7 @@ public class RaporDAO {
         String buAy = LocalDate.now().toString().substring(0, 7); // örn: "2026-05"
         String sorgu = "SELECT u.Ad || ' ' || u.Soyad as AdSoyad, COUNT(i.Islem_ID) as Sayi " +
                        "FROM Islemler i JOIN Kullanicilar u ON i.Kullanici_ID = u.Kullanici_ID " +
-                       "WHERE strftime('%Y-%m', i.Alis_Tarihi) = ? " +
+                       "WHERE u.Rol = 'OGRENCI' AND strftime('%Y-%m', i.Alis_Tarihi) = ? " +
                        "GROUP BY u.Kullanici_ID ORDER BY Sayi DESC LIMIT 1";
 
         try (Connection conn = DBConnection.connect();
